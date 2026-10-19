@@ -50,13 +50,13 @@ code, pre { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
 (Los nombres de familia coinciden con los de los tokens de tipografía: `Rethink Sans` e `IBM Plex Mono`.)
 
-## Cambios necesarios en `package.json`
+## `package.json`
 
-- `"files": ["dist", "fonts"]` para que la carpeta `fonts/` se publique.
-- Entrada en `exports` para `./fonts.css` (→ `./fonts/fonts.css`).
-- `sideEffects` debe incluir `*.css` para que los bundlers no eliminen el import.
+Estos campos ya están aplicados:
 
-Fragmentos exactos en `PACKAGE_SNIPPETS.md`.
+- `"files": ["dist", "fonts"]` para que `fonts/` entre en el paquete cuando se publique.
+- `exports`: `./fonts.css` → `./fonts/fonts.css`, y `./fonts/*` → `./fonts/*`.
+- `"sideEffects": ["*.css"]` para que los bundlers no eliminen el import.
 
 ## Origen y licencia
 

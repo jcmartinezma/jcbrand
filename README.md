@@ -1,6 +1,6 @@
 # jcbrand
 
-Sistema de diseño de marca **centralizado** de JC (José Carlos Martínez). Hoy contiene los **tokens**; más adelante, componentes y otros assets.
+Sistema de diseño de marca **centralizado** de JC (José Carlos Martínez). Hoy contiene los **tokens** y las **fuentes** de marca; más adelante, componentes y otros assets.
 
 ## Estructura
 ```
@@ -13,9 +13,28 @@ jcbrand/
 │   ├── css/           # custom properties: core/, semantic/ y tokens.css
 │   └── scss/          # parciales para @use / @forward
 ├── scripts/           # check-tokens.mjs y la comprobación del build
+├── fonts/             # fuentes de marca · ver FONTS.md
+│   ├── fonts.css      # @font-face (Rethink Sans, IBM Plex Mono)
+│   ├── files/         # .woff2
+│   └── licenses/      # SIL Open Font License 1.1
+├── FONTS.md           # pesos, licencias y huecos
 ├── components/        # (futuro)
-└── assets/            # (futuro) logos, iconos, fuentes…
+└── assets/            # (futuro) logos, iconos
 ```
+
+## Fuentes
+
+Dos familias: **Rethink Sans** (texto) e **IBM Plex Mono** (mono). Los `@font-face` están en `fonts/fonts.css`, con rutas relativas a `fonts/files/`.
+
+Cuando el paquete esté instalado, este import usa el export `./fonts.css` (también está `./fonts/*`). `files` incluye `dist` y `fonts`, y `sideEffects` es `*.css`, para que el bundler no descarte la hoja:
+
+```js
+import '@jcmartinezma/jcbrand/fonts.css';
+```
+
+Mientras no haya publish, enlaza el archivo del repo: `fonts/fonts.css`.
+
+Pesos, licencias y huecos (Rethink Sans no trae 300; IBM Plex Mono no trae 800) están en [FONTS.md](FONTS.md).
 
 ## Capas
 1. **Core**: valores en crudo (`--gray-800`, `--spacing-300`…).
@@ -81,4 +100,4 @@ Sin Sass, enlaza la hoja única:
 <link rel="stylesheet" href="dist/css/tokens.css">
 ```
 
-Publicar el paquete (y un campo `exports` para `@use "@jcmartinezma/jcbrand/dist/scss"`) queda para más adelante.
+Las fuentes ya tienen `exports` (`./fonts.css` y `./fonts/*`). Publicar el paquete en GitHub Packages, y añadir exports de `dist` (para `@use "@jcmartinezma/jcbrand/dist/scss"`), queda para cuando se publique. Hoy no hay export de `dist` ni de `.`.
