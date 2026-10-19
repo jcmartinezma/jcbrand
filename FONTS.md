@@ -55,7 +55,7 @@ code, pre { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 Estos campos ya están aplicados:
 
 - `"files": ["dist", "fonts"]` para que `fonts/` entre en el paquete cuando se publique.
-- `exports`: `./fonts.css` → `./fonts/fonts.css`, y `./fonts/*` → `./fonts/*`.
+- `exports`: `./fonts.css` → `./fonts/fonts.css`, y `./fonts/*` → `./fonts/*`. Los tokens (`./dist/css/tokens.css`, `./dist/scss`, …) están documentados en el README.
 - `"sideEffects": ["*.css"]` para que los bundlers no eliminen el import.
 
 ## Origen y licencia
