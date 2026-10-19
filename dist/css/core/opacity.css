@@ -1,0 +1,13 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --opacity-00: 0%;
+  --opacity-100: 20%;
+  --opacity-200: 40%;
+  --opacity-300: 60%;
+  --opacity-400: 80%;
+}

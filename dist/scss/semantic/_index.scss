@@ -1,0 +1,13 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+@forward "color";
+@forward "typography";
+@forward "spacing";
+@forward "radius";
+@forward "motion";
+@forward "blur";
+@forward "shadow";

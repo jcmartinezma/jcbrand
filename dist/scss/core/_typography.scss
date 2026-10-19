@@ -1,0 +1,37 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --font-families-monospace-1: "IBM Plex Mono", monospace;
+  --font-families-sans-1: "Rethink Sans", sans-serif;
+  --font-letter-spacings-100: 0px;
+  --font-letter-spacings-200: 1px;
+  --font-letter-spacings-300: 2px;
+  --font-letter-spacings-minus-100: -1px;
+  --font-line-height-100: 14px;
+  --font-line-height-200: 18px;
+  --font-line-height-300: 21px;
+  --font-line-height-400: 30px;
+  --font-line-height-500: 31px;
+  --font-line-height-600: 44px;
+  --font-line-height-700: 76px;
+  --font-size-100: 12px;
+  --font-size-200: 14px;
+  --font-size-300: 16px;
+  --font-size-400: 20px;
+  --font-size-500: 24px;
+  --font-size-600: 32px;
+  --font-size-700: 40px;
+  --font-size-800: 64px;
+  --font-size-900: 72px;
+  --font-weights-100: 300;
+  --font-weights-200: 400;
+  --font-weights-300: 500;
+  --font-weights-400: 600;
+  --font-weights-500: 700;
+  --font-weights-600: 800;
+  --font-weights-700: 900;
+}
