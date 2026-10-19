@@ -1,0 +1,65 @@
+{
+  "$description": "Core tokens converted 1:1 from _blur.core.scss.",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "core/_blur.core.scss",
+      "selector": ":root"
+    }
+  },
+  "blur": {
+    "100": {
+      "$type": "dimension",
+      "$value": "4px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-100"
+        }
+      }
+    },
+    "200": {
+      "$type": "dimension",
+      "$value": "8px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-200"
+        }
+      }
+    },
+    "300": {
+      "$type": "dimension",
+      "$value": "16px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-300"
+        }
+      }
+    },
+    "400": {
+      "$type": "dimension",
+      "$value": "24px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-400"
+        }
+      }
+    },
+    "500": {
+      "$type": "dimension",
+      "$value": "40px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-500"
+        }
+      }
+    },
+    "600": {
+      "$type": "dimension",
+      "$value": "64px",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-600"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "$description": "Semantic colors, :root values (dark = default theme).",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "semantic/_color.semantic.scss",
+      "selector": ":root",
+      "theme": "dark"
+    }
+  },
+  "color": {
+    "bg": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.800}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-primary"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-secondary"
+          }
+        }
+      },
+      "secondary-inverse": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-secondary-inverse"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-tertiary"
+          }
+        }
+      },
+      "tertiary-inverse": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-tertiary-inverse"
+          }
+        }
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.gray.800-80}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-bg-overlay"
+          }
+        }
+      }
+    },
+    "surface": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-primary"
+          }
+        }
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.gray.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-primary-hover"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-secondary"
+          }
+        }
+      },
+      "secondary-inverse": {
+        "$type": "color",
+        "$value": "{color.gray.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-secondary-inverse"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-tertiary"
+          }
+        }
+      },
+      "tertiary-inverse": {
+        "$type": "color",
+        "$value": "{color.gray.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-tertiary-inverse"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.green.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-accent"
+          }
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-surface-danger"
+          }
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-primary"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-secondary"
+          }
+        }
+      },
+      "secondary-hover": {
+        "$type": "color",
+        "$value": "{color.gray.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-secondary-hover"
+          }
+        }
+      },
+      "secondary-inverse": {
+        "$type": "color",
+        "$value": "{color.gray.800}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-secondary-inverse"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.500}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-tertiary"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.green.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-accent"
+          }
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-text-danger"
+          }
+        }
+      }
+    },
+    "icon": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-icon-primary"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-icon-secondary"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.500}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-icon-tertiary"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.green.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-icon-accent"
+          }
+        }
+      }
+    },
+    "border": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-primary"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-secondary"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-tertiary"
+          }
+        }
+      },
+      "secondary-hover": {
+        "$type": "color",
+        "$value": "{color.gray.300}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-secondary-hover"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.green.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-accent"
+          }
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--color-border-danger"
+          }
+        }
+      }
+    }
+  }
+}

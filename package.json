@@ -1,0 +1,8 @@
+{
+  "name": "@jcmartinezma/jcbrand",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "check:tokens": "node scripts/check-tokens.mjs"
+  }
+}
