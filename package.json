@@ -2,6 +2,18 @@
   "name": "@jcmartinezma/jcbrand",
   "version": "0.1.0",
   "private": true,
+  "files": [
+    "dist",
+    "fonts"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    "./fonts.css": "./fonts/fonts.css",
+    "./fonts/*": "./fonts/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "check:tokens": "node scripts/check-tokens.mjs"
   },
