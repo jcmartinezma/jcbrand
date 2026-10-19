@@ -51,6 +51,21 @@ Core y semantic comparten grupos raíz (`color`, `spacing`, `border-radius`, `mo
 - **shadow**: objetos DTCG `{color, offsetX, offsetY, blur}` con los strings originales (`"0"`, `"1px"`, `"rgb(0 0 0 / 0.16)"`). Las capas múltiples van como array. **`spread` se omite** porque el original no lo declara: DTCG lo exige, pero añadir `0` cambiaría el CSS generado.
 - **Orden**: las custom properties no dependen del orden, y JS reordena las claves numéricas (`"100"`), así que el orden de las claves no es significativo.
 
+## Build con Style Dictionary
+
+La configuración está en `sd.config.mjs` (Style Dictionary 5). Lee `tokens/core/*.json` y `tokens/semantic/*.json` y escribe `dist/`. El nombre de salida es siempre `$extensions["com.jcbrand"].cssVar`; el build no inventa nombres a partir de la ruta.
+
+`color.light.json` usa las mismas rutas que `color.dark.json` (`color.bg.primary`, …). El parser las anida bajo `theme-light` solo para que Style Dictionary no pise el tema oscuro. Ese prefijo no llega al CSS: la variable sigue siendo `--color-bg-primary`, dentro de `[data-theme="light"]`.
+
+```bash
+npm run build:tokens   # genera dist/ y comprueba nombres y valores
+npm run clean:tokens   # borra dist/css y dist/scss
+```
+
+Hace falta Node 22 o superior. `dist/` se commitea: quien use el repo obtiene el CSS y el SCSS sin correr el build. No lo edites a mano; si cambia un JSON, regenera y commitea `dist/`.
+
+Los parciales de `dist/scss/` se cargan con `@use` (ver el README de la raíz). Un alias sale como `var(--referencia)`, igual que en el SCSS original. Los colores con alpha salen como `rgb(from var(--…) r g b / N%)`.
+
 ## Validación
 Sin el SCSS original, el script solo valida el JSON (parseo, `$type`, `cssVar`, alias que resuelven sin ciclos y con el mismo tipo, y overrides de light que existen en `:root`):
 

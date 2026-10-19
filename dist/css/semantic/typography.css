@@ -1,0 +1,36 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --text-letter-spacing-normal: var(--font-letter-spacings-100);
+  --text-letter-spacing-tight: var(--font-letter-spacings-minus-100);
+  --text-letter-spacing-wide: var(--font-letter-spacings-200);
+  --text-letter-spacing-wider: var(--font-letter-spacings-300);
+  --text-line-height-2xl: var(--font-line-height-600);
+  --text-line-height-3xl: var(--font-line-height-700);
+  --text-line-height-lg: var(--font-line-height-500);
+  --text-line-height-md: var(--font-line-height-300);
+  --text-line-height-sm: var(--font-line-height-200);
+  --text-line-height-xl: var(--font-line-height-400);
+  --text-line-height-xs: var(--font-line-height-100);
+  --text-size-2xl: var(--font-size-700);
+  --text-size-3xl: var(--font-size-800);
+  --text-size-4xl: var(--font-size-900);
+  --text-size-lg: var(--font-size-500);
+  --text-size-md: var(--font-size-400);
+  --text-size-sm: var(--font-size-300);
+  --text-size-xl: var(--font-size-600);
+  --text-size-xs: var(--font-size-200);
+  --text-size-xxs: var(--font-size-100);
+  --text-style-base: var(--font-families-sans-1);
+  --text-style-decor: var(--font-families-monospace-1);
+  --text-style-display: var(--font-families-sans-1);
+  --text-weight-bold: var(--font-weights-500);
+  --text-weight-extrabold: var(--font-weights-600);
+  --text-weight-light: var(--font-weights-100);
+  --text-weight-normal: var(--font-weights-200);
+  --text-weight-semibold: var(--font-weights-400);
+}

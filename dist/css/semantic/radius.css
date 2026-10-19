@@ -1,0 +1,13 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --border-radius-full: var(--border-radius-600);
+  --border-radius-lg: var(--border-radius-500);
+  --border-radius-md: var(--border-radius-400);
+  --border-radius-sm: var(--border-radius-300);
+  --border-radius-xs: var(--border-radius-100);
+}

@@ -1,0 +1,18 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --spacing-100: 4px;
+  --spacing-1000: 400px;
+  --spacing-200: 8px;
+  --spacing-300: 16px;
+  --spacing-400: 24px;
+  --spacing-500: 32px;
+  --spacing-600: 64px;
+  --spacing-700: 128px;
+  --spacing-800: 256px;
+  --spacing-900: 320px;
+}

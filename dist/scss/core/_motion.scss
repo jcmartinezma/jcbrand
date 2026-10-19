@@ -1,0 +1,23 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --motion-delay-0: 0s;
+  --motion-delay-100: 0.05s;
+  --motion-delay-200: 0.1s;
+  --motion-delay-300: 0.15s;
+  --motion-duration-0: 0s;
+  --motion-duration-100: 0.1s;
+  --motion-duration-200: 0.15s;
+  --motion-duration-300: 0.2s;
+  --motion-duration-400: 0.3s;
+  --motion-duration-500: 0.4s;
+  --motion-duration-600: 0.6s;
+  --motion-easing-0: cubic-bezier(0, 0.0009, 1, 1);
+  --motion-easing-100: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-200: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-300: cubic-bezier(0.4, 0, 1, 1);
+}

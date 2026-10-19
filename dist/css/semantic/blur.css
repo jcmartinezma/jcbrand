@@ -1,0 +1,14 @@
+/**
+ * No edites este archivo a mano.
+ * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
+ * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ */
+
+:root {
+  --blur-2xl: var(--blur-600);
+  --blur-lg: var(--blur-400);
+  --blur-md: var(--blur-300);
+  --blur-sm: var(--blur-200);
+  --blur-xl: var(--blur-500);
+  --blur-xs: var(--blur-100);
+}
