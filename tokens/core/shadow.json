@@ -1,0 +1,9 @@
+{
+  "$description": "Empty: _shadow.core.scss defines no core values (original comment: Figma defines no core shadow values).",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "core/_shadow.core.scss",
+      "selector": ":root"
+    }
+  }
+}

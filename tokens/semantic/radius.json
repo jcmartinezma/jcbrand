@@ -1,0 +1,56 @@
+{
+  "$description": "Semantic tokens converted 1:1 from _radius.semantic.scss.",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "semantic/_radius.semantic.scss",
+      "selector": ":root"
+    }
+  },
+  "border-radius": {
+    "xs": {
+      "$type": "dimension",
+      "$value": "{border-radius.100}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--border-radius-xs"
+        }
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": "{border-radius.300}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--border-radius-sm"
+        }
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "{border-radius.400}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--border-radius-md"
+        }
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "{border-radius.500}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--border-radius-lg"
+        }
+      }
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "{border-radius.600}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--border-radius-full"
+        }
+      }
+    }
+  }
+}

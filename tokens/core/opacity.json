@@ -1,0 +1,61 @@
+{
+  "$description": "Core tokens converted 1:1 from _opacity.core.scss.",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "core/_opacity.core.scss",
+      "selector": ":root"
+    }
+  },
+  "opacity": {
+    "00": {
+      "$type": "number",
+      "$value": 0.0,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--opacity-00",
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "100": {
+      "$type": "number",
+      "$value": 0.2,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--opacity-100",
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "200": {
+      "$type": "number",
+      "$value": 0.4,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--opacity-200",
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "300": {
+      "$type": "number",
+      "$value": 0.6,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--opacity-300",
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "400": {
+      "$type": "number",
+      "$value": 0.8,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--opacity-400",
+          "cssFormat": "percent"
+        }
+      }
+    }
+  }
+}

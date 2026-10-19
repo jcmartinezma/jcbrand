@@ -1,0 +1,65 @@
+{
+  "$description": "Semantic tokens converted 1:1 from _blur.semantic.scss.",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "semantic/_blur.semantic.scss",
+      "selector": ":root"
+    }
+  },
+  "blur": {
+    "xs": {
+      "$type": "dimension",
+      "$value": "{blur.100}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-xs"
+        }
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": "{blur.200}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-sm"
+        }
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "{blur.300}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-md"
+        }
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "{blur.400}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-lg"
+        }
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": "{blur.500}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-xl"
+        }
+      }
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": "{blur.600}",
+      "$extensions": {
+        "com.jcbrand": {
+          "cssVar": "--blur-2xl"
+        }
+      }
+    }
+  }
+}

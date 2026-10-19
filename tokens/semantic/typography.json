@@ -1,0 +1,273 @@
+{
+  "$description": "Semantic tokens converted 1:1 from _typography.semantic.scss.",
+  "$extensions": {
+    "com.jcbrand": {
+      "source": "semantic/_typography.semantic.scss",
+      "selector": ":root"
+    }
+  },
+  "text": {
+    "style": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{font.families.sans-1}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-style-display"
+          }
+        }
+      },
+      "base": {
+        "$type": "fontFamily",
+        "$value": "{font.families.sans-1}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-style-base"
+          }
+        }
+      },
+      "decor": {
+        "$type": "fontFamily",
+        "$value": "{font.families.monospace-1}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-style-decor"
+          }
+        }
+      }
+    },
+    "size": {
+      "xxs": {
+        "$type": "dimension",
+        "$value": "{font.size.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-xxs"
+          }
+        }
+      },
+      "xs": {
+        "$type": "dimension",
+        "$value": "{font.size.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-xs"
+          }
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{font.size.300}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-sm"
+          }
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{font.size.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-md"
+          }
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{font.size.500}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-lg"
+          }
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{font.size.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-xl"
+          }
+        }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "{font.size.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-2xl"
+          }
+        }
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": "{font.size.800}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-3xl"
+          }
+        }
+      },
+      "4xl": {
+        "$type": "dimension",
+        "$value": "{font.size.900}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-size-4xl"
+          }
+        }
+      }
+    },
+    "weight": {
+      "light": {
+        "$type": "fontWeight",
+        "$value": "{font.weights.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-weight-light"
+          }
+        }
+      },
+      "normal": {
+        "$type": "fontWeight",
+        "$value": "{font.weights.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-weight-normal"
+          }
+        }
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": "{font.weights.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-weight-semibold"
+          }
+        }
+      },
+      "bold": {
+        "$type": "fontWeight",
+        "$value": "{font.weights.500}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-weight-bold"
+          }
+        }
+      },
+      "extrabold": {
+        "$type": "fontWeight",
+        "$value": "{font.weights.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-weight-extrabold"
+          }
+        }
+      }
+    },
+    "line-height": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{font.line-height.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-xs"
+          }
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{font.line-height.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-sm"
+          }
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{font.line-height.300}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-md"
+          }
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{font.line-height.500}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-lg"
+          }
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{font.line-height.400}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-xl"
+          }
+        }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "{font.line-height.600}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-2xl"
+          }
+        }
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": "{font.line-height.700}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-line-height-3xl"
+          }
+        }
+      }
+    },
+    "letter-spacing": {
+      "tight": {
+        "$type": "dimension",
+        "$value": "{font.letter-spacings.minus-100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-letter-spacing-tight"
+          }
+        }
+      },
+      "normal": {
+        "$type": "dimension",
+        "$value": "{font.letter-spacings.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-letter-spacing-normal"
+          }
+        }
+      },
+      "wide": {
+        "$type": "dimension",
+        "$value": "{font.letter-spacings.200}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-letter-spacing-wide"
+          }
+        }
+      },
+      "wider": {
+        "$type": "dimension",
+        "$value": "{font.letter-spacings.300}",
+        "$extensions": {
+          "com.jcbrand": {
+            "cssVar": "--text-letter-spacing-wider"
+          }
+        }
+      }
+    }
+  }
+}
