@@ -26,13 +26,13 @@ jcbrand/
 
 Dos familias: **Rethink Sans** (texto) e **IBM Plex Mono** (mono). Los `@font-face` están en `fonts/fonts.css`, con rutas relativas a `fonts/files/`.
 
-Cuando el paquete esté instalado, este import usa el export `./fonts.css` (también está `./fonts/*`). `files` incluye `dist` y `fonts`, y `sideEffects` es `*.css`, para que el bundler no descarte la hoja:
+Con el paquete instalado, el import usa el export `./fonts.css` (también está `./fonts/*`). `files` incluye `dist` y `fonts`, y `sideEffects` es `*.css`, para que el bundler no descarte la hoja:
 
 ```js
 import '@jcmartinezma/jcbrand/fonts.css';
 ```
 
-Mientras no haya publish, enlaza el archivo del repo: `fonts/fonts.css`.
+Dentro de este repo, sin instalar el paquete, el archivo es `fonts/fonts.css`.
 
 Pesos, licencias y huecos (Rethink Sans no trae 300; IBM Plex Mono no trae 800) están en [FONTS.md](FONTS.md).
 
@@ -45,7 +45,7 @@ Los nombres de variable CSS originales se conservan en cada token (`$extensions[
 
 ## Build
 
-El paquete sigue siendo **privado**: no se publica a npm. `dist/` sí se commitea, para que quien copie el repo tenga el CSS y el SCSS sin instalar Style Dictionary ni lanzar el build.
+El paquete es **privado en GitHub Packages**, no en npmjs.com. `dist/` sí se commitea, para que quien copie el repo tenga el CSS y el SCSS sin instalar Style Dictionary ni lanzar el build.
 
 Hace falta **Node 22 o más** (lo pide Style Dictionary 5). Desde la raíz:
 
@@ -71,14 +71,59 @@ No edites `dist/` a mano. Si cambias un JSON, vuelve a lanzar el build y commite
 
 El nombre de cada variable es el `cssVar` del token (`--gray-800`, `--color-bg-primary`). Un alias semántico se escribe `var(--gray-800)`, no el color ya resuelto.
 
-### Cómo lo usará un proyecto
+## Instalar el paquete (GitHub Packages)
 
-Estos parciales no crean variables Sass (`$gray-800`). Escriben **custom properties** de CSS dentro de `:root`. Sass las copia al CSS final; en el componente se usan con `var(...)`.
+`@jcmartinezma/jcbrand` se publica **solo** en el registro npm de GitHub (`https://npm.pkg.github.com`), ligado al repo privado `jcmartinezma/jcbrand`. No está en npmjs.com y no se ve sin acceso a ese repo.
 
-Mientras el paquete no esté publicado, apunta al directorio local:
+`"private": true` se quitó a propósito. Ese campo hace que `npm publish` se niegue en **cualquier** registro, también en el de GitHub. La privacidad no sale de ahí: la da el repo privado. El primer publish en GitHub Packages nace privado y, como `repository` apunta a este repo, el paquete hereda sus permisos.
+
+### Token y `.npmrc` del proyecto que lo instala
+
+Hace falta un personal access token **classic**. GitHub Packages no autentica con un token fine-grained. Scopes:
+
+- `read:packages` para descargar el paquete.
+- `repo`, porque el repositorio es privado. Sin `repo`, `read:packages` no basta.
+
+Tu usuario de GitHub tiene que poder leer `jcmartinezma/jcbrand`. No subas el token al repo. En el **proyecto consumidor**, crea un `.npmrc`:
+
+```
+@jcmartinezma:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+Ese archivo solo desvía el scope `@jcmartinezma`. El resto de dependencias sigue saliendo de npmjs.com. Luego:
+
+```bash
+export GITHUB_TOKEN=ghp_tu_token
+npm install @jcmartinezma/jcbrand
+```
+
+En GitHub Actions de **otro** repo, `GITHUB_TOKEN` solo puede leer este paquete si el paquete le da acceso. En local, o en un proyecto que no es este repo, usa el PAT classic de arriba.
+
+### Imports
+
+Fuentes:
+
+```js
+import '@jcmartinezma/jcbrand/fonts.css';
+```
+
+Tokens en un solo CSS (`dist/css/tokens.css`):
+
+```js
+import '@jcmartinezma/jcbrand/dist/css/tokens.css';
+```
+
+Una hoja concreta que exista bajo `dist/css/` (por ejemplo el color semántico):
+
+```js
+import '@jcmartinezma/jcbrand/dist/css/semantic/color.css';
+```
+
+SCSS. El export `./dist/scss` apunta a `dist/scss/_index.scss` (`@forward` de core y semantic). `./dist/scss/core` y `./dist/scss/semantic` apuntan a sus `_index.scss`:
 
 ```scss
-@use "../ruta/a/jcbrand/dist/scss" as jcbrand;
+@use "@jcmartinezma/jcbrand/dist/scss" as jcbrand;
 
 .card {
   background: var(--color-bg-primary);
@@ -86,18 +131,22 @@ Mientras el paquete no esté publicado, apunta al directorio local:
 }
 ```
 
-`as jcbrand` solo nombra el espacio de miembros Sass (mixins, funciones, `$variables`). No renombra `--color-bg-primary`: las custom properties siguen siendo globales.
+Estos parciales no crean variables Sass (`$gray-800`). Escriben **custom properties** dentro de `:root`. Sass las copia al CSS final. `as jcbrand` solo nombra el espacio de miembros Sass (mixins, funciones, `$variables`). No renombra `--color-bg-primary`: las custom properties siguen siendo globales y se usan con `var(...)`.
 
-El tema claro son 26 overrides. El resto se hereda de `:root`. En el HTML:
+El tema claro son 26 overrides. El resto se hereda de `:root`:
 
 ```html
 <html data-theme="light">
 ```
 
-Sin Sass, enlaza la hoja única:
+Sin empaquetador, el CSS instalado está en `node_modules/@jcmartinezma/jcbrand/dist/css/tokens.css`. Dentro de este repo, sin instalar, sigue valiendo `dist/css/tokens.css` o `@use "../ruta/a/jcbrand/dist/scss"`.
 
-```html
-<link rel="stylesheet" href="dist/css/tokens.css">
-```
+### Publicar una versión
 
-Las fuentes ya tienen `exports` (`./fonts.css` y `./fonts/*`). Publicar el paquete en GitHub Packages, y añadir exports de `dist` (para `@use "@jcmartinezma/jcbrand/dist/scss"`), queda para cuando se publique. Hoy no hay export de `dist` ni de `.`.
+No se publica en cada push a `main`. El workflow `.github/workflows/publish.yml` corre al **publicar un Release** (no un borrador), o si lo lanzas a mano en Actions.
+
+1. Sube `version` en `package.json`. npm no deja repetir una versión.
+2. Merge a `main` con el `dist/` ya generado.
+3. Crea un Release con tag `v` + esa versión (`v0.1.0` si `package.json` dice `0.1.0`) y publícalo. El workflow comprueba que coinciden y hace `npm publish` con el `GITHUB_TOKEN` del repo (`packages: write`).
+
+La primera vez el paquete aún no existe: hay que publicar ese Release, o pulsar **Run workflow** sobre `main`. No uses `--access public` ni `registry.npmjs.org`.
