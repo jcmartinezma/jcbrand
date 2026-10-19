@@ -4,5 +4,8 @@
   "private": true,
   "scripts": {
     "check:tokens": "node scripts/check-tokens.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.7.0"
   }
 }
