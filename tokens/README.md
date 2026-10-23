@@ -1,5 +1,7 @@
 # Tokens · formato y mapeo a CSS
 
+Este repo se usa como skill de Cursor (`SKILL.md` en la raíz), no como paquete npm. Quien aplique la marca copia `dist/` (generado desde estos JSON) y `fonts/`. No edites `dist/` a mano.
+
 JSON en formato **W3C DTCG** (`$value`, `$type`, `$description`; alias `"{ruta.del.token}"`). Es una conversión **estructural 1:1** de los SCSS originales: no se ha añadido, renombrado ni corregido ningún token ni valor.
 
 ## Archivos

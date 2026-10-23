@@ -1,30 +1,11 @@
 {
   "name": "@jcmartinezma/jcbrand",
   "version": "0.1.0",
+  "private": true,
+  "description": "Tokens y fuentes de la marca de JC. Se usa como skill de Cursor; no se publica.",
   "repository": {
     "type": "git",
     "url": "https://github.com/jcmartinezma/jcbrand.git"
-  },
-  "files": [
-    "dist",
-    "fonts"
-  ],
-  "sideEffects": [
-    "*.css"
-  ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "exports": {
-    "./fonts.css": "./fonts/fonts.css",
-    "./fonts/*": "./fonts/*",
-    "./dist/css/tokens.css": "./dist/css/tokens.css",
-    "./dist/css/*": "./dist/css/*",
-    "./dist/scss": "./dist/scss/_index.scss",
-    "./dist/scss/core": "./dist/scss/core/_index.scss",
-    "./dist/scss/semantic": "./dist/scss/semantic/_index.scss",
-    "./dist/scss/*": "./dist/scss/*",
-    "./package.json": "./package.json"
   },
   "scripts": {
     "check:tokens": "node scripts/check-tokens.mjs",

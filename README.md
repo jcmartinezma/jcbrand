@@ -1,10 +1,37 @@
 # jcbrand
 
-Sistema de diseño de marca **centralizado** de JC (José Carlos Martínez). Hoy contiene los **tokens** y las **fuentes** de marca; más adelante, componentes y otros assets.
+Sistema de diseño de la marca de JC (José Carlos Martínez), la de [jcmartinez.net](https://jcmartinez.net). Aquí están los **tokens** y las **fuentes**. El repo es privado y se usa como **skill de Cursor**: un agente la lee y aplica la marca en cualquier otro proyecto copiando `dist/` y `fonts/`.
+
+No es un paquete npm. No se instala con `npm install`, no hace falta `.npmrc` ni un `GITHUB_TOKEN`, y no se publica en GitHub Packages ni en npmjs.com.
+
+## Usarla como skill
+
+Cursor trata como skill de usuario cualquier carpeta de `~/.cursor/skills/` que tenga un `SKILL.md` en la raíz. Este repo ya lo tiene, así que el clon entra directo:
+
+```bash
+git clone git@github.com:jcmartinezma/jcbrand.git ~/.cursor/skills/jcbrand
+```
+
+Hace falta permiso de lectura sobre este repo (sigue siendo privado). Abre un chat nuevo para que Cursor la detecte. A partir de ahí, al pedir que una interfaz use la marca de JC, el estilo de jcmartinez.net o los tokens jcbrand, el agente sigue `SKILL.md`.
+
+Qué hace esa skill, en corto:
+
+1. Copia `dist/` y `fonts/` al proyecto destino, por ejemplo a `src/styles/jcbrand/`.
+2. Importa las fuentes y `dist/css/tokens.css` (o el SCSS) en el entry global.
+3. En los componentes usa solo tokens semánticos (`--color-bg-primary`, `--text-size-sm`, …), nunca un hex ni un primitivo (`--gray-800`).
+4. Compone la tipografía en CSS o en un mixin. No deja clases de tipo en el HTML.
+5. Deja el tema oscuro por defecto. El claro es `data-theme="light"` en `<html>`.
+
+El detalle por stack (CSS, SCSS, Tailwind, Next.js, Astro), las reglas de marca y el checklist están en `SKILL.md` y en `reference/`.
+
+Cuando cambien los tokens en este repo: `git pull` dentro de `~/.cursor/skills/jcbrand` y vuelve a copiar `dist/` y `fonts/` a cada proyecto. Esos proyectos no reciben la marca solos.
 
 ## Estructura
+
 ```
 jcbrand/
+├── SKILL.md           # instrucciones para el agente
+├── reference/         # tokens, reglas de marca, recetas por stack, checklist
 ├── tokens/            # fuente de verdad, JSON (W3C DTCG) · ver tokens/README.md
 │   ├── core/          # primitivos: color, typography, spacing, radius, motion, blur, opacity, shadow (vacío)
 │   └── semantic/      # intención: color.dark (por defecto), color.light, typography, spacing, radius, motion, blur, shadow
@@ -24,39 +51,33 @@ jcbrand/
 
 ## Fuentes
 
-Dos familias: **Rethink Sans** (texto) e **IBM Plex Mono** (mono). Los `@font-face` están en `fonts/fonts.css`, con rutas relativas a `fonts/files/`.
-
-Con el paquete instalado, el import usa el export `./fonts.css` (también está `./fonts/*`). `files` incluye `dist` y `fonts`, y `sideEffects` es `*.css`, para que el bundler no descarte la hoja:
-
-```js
-import '@jcmartinezma/jcbrand/fonts.css';
-```
-
-Dentro de este repo, sin instalar el paquete, el archivo es `fonts/fonts.css`.
+Dos familias: **Rethink Sans** (texto) e **IBM Plex Mono** (mono). Los `@font-face` están en `fonts/fonts.css`, con rutas relativas a `fonts/files/`. Quien copie la carpeta `fonts/` entera no tiene que reescribir esas rutas.
 
 Pesos, licencias y huecos (Rethink Sans no trae 300; IBM Plex Mono no trae 800) están en [FONTS.md](FONTS.md).
 
 ## Capas
-1. **Core**: valores en crudo (`--gray-800`, `--spacing-300`…).
+
+1. **Core**: valores en crudo (`--gray-800`, `--spacing-100`…).
 2. **Semantic**: alias de core con intención de uso (`--color-bg-primary` → `--gray-800`).
 3. **Temas**: **oscuro** por defecto (`:root`, `color.dark.json`) y **claro** por override (`[data-theme="light"]`, `color.light.json`, solo los tokens que cambian).
 
-Los nombres de variable CSS originales se conservan en cada token (`$extensions["com.jcbrand"].cssVar`).
+Los nombres de variable CSS originales se conservan en cada token (`$extensions["com.jcbrand"].cssVar`). En un componente se usa el nombre semántico. El core se carga igual, porque el alias apunta a él con `var(...)`.
 
 ## Build
 
-El paquete es **privado en GitHub Packages**, no en npmjs.com. `dist/` sí se commitea, para que quien copie el repo tenga el CSS y el SCSS sin instalar Style Dictionary ni lanzar el build.
+`dist/` se commitea para poder copiar el CSS y el SCSS sin instalar Style Dictionary en el proyecto destino. El build solo hace falta aquí, cuando cambia un JSON.
 
-Hace falta **Node 22 o más** (lo pide Style Dictionary 5). Desde la raíz:
+Hace falta **Node 22 o más** (lo pide Style Dictionary 5). Desde la raíz de este repo:
 
 ```bash
 npm install
 npm run build:tokens
+npm run check:tokens
 ```
 
-`build:tokens` genera `dist/` y después compara cada variable con el JSON. Si un nombre o un valor no coincide con `cssVar`, el comando falla. `npm run clean:tokens` borra solo esos archivos generados.
+`build:tokens` genera `dist/` y después compara cada variable con el JSON. Si un nombre o un valor no coincide con `cssVar`, el comando falla. `npm run clean:tokens` borra solo esos archivos generados. `check:tokens` valida el JSON (alias, tipos, overrides del tema claro) sin regenerar.
 
-No edites `dist/` a mano. Si cambias un JSON, vuelve a lanzar el build y commitea `dist/` junto con el token.
+No edites `dist/` a mano. Si cambias un JSON, vuelve a lanzar el build y commitea `dist/` junto con el token. Si cambió un valor que esté descrito en `reference/`, actualiza esa tabla: si no, la skill se queda con un número viejo. Ante un conflicto, manda `dist/`.
 
 ### Qué sale
 
@@ -71,82 +92,28 @@ No edites `dist/` a mano. Si cambias un JSON, vuelve a lanzar el build y commite
 
 El nombre de cada variable es el `cssVar` del token (`--gray-800`, `--color-bg-primary`). Un alias semántico se escribe `var(--gray-800)`, no el color ya resuelto.
 
-## Instalar el paquete (GitHub Packages)
+`package.json` tiene `"private": true`. Ese campo hace que `npm publish` se niegue. Los scripts de arriba siguen siendo los de generar y comprobar tokens.
 
-`@jcmartinezma/jcbrand` se publica **solo** en el registro npm de GitHub (`https://npm.pkg.github.com`), ligado al repo privado `jcmartinezma/jcbrand`. No está en npmjs.com y no se ve sin acceso a ese repo.
+## Paquete antiguo en GitHub Packages
 
-`"private": true` se quitó a propósito. Ese campo hace que `npm publish` se niegue en **cualquier** registro, también en el de GitHub. La privacidad no sale de ahí: la da el repo privado. El primer publish en GitHub Packages nace privado y, como `repository` apunta a este repo, el paquete hereda sus permisos.
+La versión 0.1.0 se publicó en GitHub Packages (`@jcmartinezma/jcbrand`) con el release `v0.1.0`. Este repo ya no publica. Si el paquete sigue en tu cuenta, bórralo tú: el token con el que se trabaja este repo desde un agente no tiene permiso `delete:packages`, y la API responde 404 tanto si el paquete no está como si el token no puede ver un paquete privado.
 
-### Token y `.npmrc` del proyecto que lo instala
+En la web, con tu usuario:
 
-Hace falta un personal access token **classic**. GitHub Packages no autentica con un token fine-grained. Scopes:
+1. Abre [los paquetes de tu perfil](https://github.com/jcmartinezma?tab=packages) (o la sección Packages del repo).
+2. Entra en `@jcmartinezma/jcbrand`.
+3. **Package settings**, al fondo, **Delete this package**. Confirma escribiendo el nombre del paquete.
 
-- `read:packages` para descargar el paquete.
-- `repo`, porque el repositorio es privado. Sin `repo`, `read:packages` no basta.
-
-Tu usuario de GitHub tiene que poder leer `jcmartinezma/jcbrand`. No subas el token al repo. En el **proyecto consumidor**, crea un `.npmrc`:
-
-```
-@jcmartinezma:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-Ese archivo solo desvía el scope `@jcmartinezma`. El resto de dependencias sigue saliendo de npmjs.com. Luego:
+Por línea de comandos, la sesión de `gh` tiene que ser la tuya y el token necesita `delete:packages` y `repo` (el paquete nació privado, ligado a este repo). No guardes el token en el repo:
 
 ```bash
-export GITHUB_TOKEN=ghp_tu_token
-npm install @jcmartinezma/jcbrand
+gh auth refresh -s delete:packages,repo,read:packages
+gh api -X DELETE /user/packages/npm/jcbrand
 ```
 
-En GitHub Actions de **otro** repo, `GITHUB_TOKEN` solo puede leer este paquete si el paquete le da acceso. En local, o en un proyecto que no es este repo, usa el PAT classic de arriba.
+Un borrado hecho devuelve **204** y el cuerpo vacío. Un 404 no cuenta como borrado. Para quitar solo la versión 0.1.0, lista antes los ids y borra ese:
 
-### Imports
-
-Fuentes:
-
-```js
-import '@jcmartinezma/jcbrand/fonts.css';
+```bash
+gh api /user/packages/npm/jcbrand/versions
+gh api -X DELETE /user/packages/npm/jcbrand/versions/VERSION_ID
 ```
-
-Tokens en un solo CSS (`dist/css/tokens.css`):
-
-```js
-import '@jcmartinezma/jcbrand/dist/css/tokens.css';
-```
-
-Una hoja concreta que exista bajo `dist/css/` (por ejemplo el color semántico):
-
-```js
-import '@jcmartinezma/jcbrand/dist/css/semantic/color.css';
-```
-
-SCSS. El export `./dist/scss` apunta a `dist/scss/_index.scss` (`@forward` de core y semantic). `./dist/scss/core` y `./dist/scss/semantic` apuntan a sus `_index.scss`:
-
-```scss
-@use "@jcmartinezma/jcbrand/dist/scss" as jcbrand;
-
-.card {
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-}
-```
-
-Estos parciales no crean variables Sass (`$gray-800`). Escriben **custom properties** dentro de `:root`. Sass las copia al CSS final. `as jcbrand` solo nombra el espacio de miembros Sass (mixins, funciones, `$variables`). No renombra `--color-bg-primary`: las custom properties siguen siendo globales y se usan con `var(...)`.
-
-El tema claro son 26 overrides. El resto se hereda de `:root`:
-
-```html
-<html data-theme="light">
-```
-
-Sin empaquetador, el CSS instalado está en `node_modules/@jcmartinezma/jcbrand/dist/css/tokens.css`. Dentro de este repo, sin instalar, sigue valiendo `dist/css/tokens.css` o `@use "../ruta/a/jcbrand/dist/scss"`.
-
-### Publicar una versión
-
-No se publica en cada push a `main`. El workflow `.github/workflows/publish.yml` corre al **publicar un Release** (no un borrador), o si lo lanzas a mano en Actions.
-
-1. Sube `version` en `package.json`. npm no deja repetir una versión.
-2. Merge a `main` con el `dist/` ya generado.
-3. Crea un Release con tag `v` + esa versión (`v0.1.0` si `package.json` dice `0.1.0`) y publícalo. El workflow comprueba que coinciden y hace `npm publish` con el `GITHUB_TOKEN` del repo (`packages: write`).
-
-La primera vez el paquete aún no existe: hay que publicar ese Release, o pulsar **Run workflow** sobre `main`. No uses `--access public` ni `registry.npmjs.org`.

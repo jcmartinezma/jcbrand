@@ -1,8 +1,9 @@
 /*
- * @jcmartinezma/jcbrand — fuentes de marca
+ * jcbrand — fuentes de marca
  * Rethink Sans (variable, wght 400–800) · IBM Plex Mono (300, 400, 500, 600, 700)
  * Licencia: SIL Open Font License 1.1 — ver ./licenses/
- * Uso: import '@jcmartinezma/jcbrand/fonts.css';
+ * Copia esta carpeta fonts/ junto con dist/ al proyecto. Las rutas son relativas
+ * (./files/...). Importa este archivo; no lo cargues desde un CDN ni desde npm.
  */
 
 /* ---------- Rethink Sans (variable) ---------- */
