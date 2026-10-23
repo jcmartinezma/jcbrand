@@ -1,0 +1,6 @@
+# `files` en package.json ya limita el tarball a dist/ y fonts/.
+# Esto documenta que Storybook no se publica aunque alguien amplíe `files`.
+.storybook
+stories
+storybook-static
+*storybook.log

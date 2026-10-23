@@ -353,6 +353,8 @@ Pages Router: los mismos `import` en `pages/_app.tsx`.
 
 Con Vite + React, los mismos `import` en `main.tsx`, antes del render. Las `url('./files/...')` de `fonts.css` las resuelve el bundler dentro de `node_modules/@jcmartinezma/jcbrand/fonts/`. No copies los `.woff2` a `public/`.
 
+Los componentes de jcbrand, cuando existan, serán React y su CSS usará tokens semánticos. La referencia visual es la Storybook de este repo (`npm run storybook` dentro de jcbrand, no en el proyecto destino). No se publica.
+
 ## Astro
 
 En el layout base, para que cada página herede las variables:
@@ -371,5 +373,7 @@ import "../styles/global.css";
 ```
 
 `global.css` es el `body` y el foco. No pongas `tokens.css` solo en una página: la siguiente ruta saldría sin marca.
+
+Cuando el paquete traiga componentes, serán React. En Astro se montan como islas (`client:*`), con los mismos imports de `fonts.css` y `tokens.css` en el layout. No hace falta una versión `.astro` de cada pieza.
 
 Si el proyecto Astro usa Tailwind, suma la receta de Tailwind 4 (Astro con `@tailwindcss/vite`) o la de Tailwind 3, sin duplicar el import de `tokens.css`.

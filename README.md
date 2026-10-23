@@ -36,7 +36,9 @@ jcbrand/
 │   ├── files/         # .woff2
 │   └── licenses/      # SIL Open Font License 1.1
 ├── FONTS.md           # pesos, licencias y huecos
-├── components/        # (futuro) piezas de UI; hoy vacío, no se publica
+├── components/        # (futuro) piezas de UI en React; hoy vacío, no se publica
+├── .storybook/        # Storybook (React + Vite); no se publica
+├── stories/           # páginas Foundations; leen tokens/; no se publica
 └── assets/            # (futuro) logos, iconos
 ```
 
@@ -163,6 +165,40 @@ No se publica en cada push a `main`. El workflow `.github/workflows/publish.yml`
 
 No uses `--access public` ni `registry.npmjs.org`.
 
+## Storybook
+
+Referencia visual de los tokens. No es un sitio público y no entra en el paquete: `files` sigue siendo `dist` y `fonts`, y `.npmignore` deja fuera `.storybook/`, `stories/` y `storybook-static/`.
+
+Hace falta Node 22 o más, el mismo que el build de tokens. Desde la raíz:
+
+```bash
+npm install
+npm run storybook
+```
+
+`prestorybook` lanza `build:tokens` antes de abrir Storybook, para que `dist/css/tokens.css` exista y coincida con los JSON. Se abre en `http://localhost:6006`. El interruptor **Tema** de la barra pone `data-theme="dark"` (inicial, el de `:root`) o `data-theme="light"` en la vista y en la documentación.
+
+Para generar el HTML estático, sin desplegarlo:
+
+```bash
+npm run build-storybook
+```
+
+Escribe `storybook-static/` (está en `.gitignore`). No hay GitHub Pages ni otro hosting.
+
+Las páginas viven en `stories/foundations/` y están bajo **Foundations**:
+
+| Página | Qué enseña |
+|---|---|
+| Introducción | Qué es jcbrand, el `.npmrc`, `GITHUB_TOKEN` y los imports |
+| Color | Primitivos y semánticos; oscuro, claro y el tema activo |
+| Tipografía | Familias, tamaños, pesos, interlineado y tracking, con muestra |
+| Espaciado, Radio, Sombra | Escalas. La sombra core está vacía, como el JSON |
+| Motion, Desenfoque, Opacidad | El resto de categorías que hay en `tokens/` |
+| Contraste | Historia para el panel Accessibility. No cambia tokens |
+
+Los valores salen de `tokens/` en el momento de renderizar (`stories/lib/tokens.mjs`). No hay una tabla de hex copiada en el MDX. El CSS de las páginas usa las mismas custom properties.
+
 ## Componentes, más adelante
 
-`components/` está en el repo y vacío. No forma parte de `files` ni de `exports`, así que hoy no se puede importar. Cuando haya piezas de UI, vivirán en esa carpeta, se añadirán a `files` y a `exports` (por ejemplo `"./components/*"` o un export por componente) y se documentarán en la skill y en el CHANGELOG. Por dentro usarán los tokens semánticos. Quien consuma el paquete las importará; no las copiará.
+`components/` está en el repo y vacío. No forma parte de `files` ni de `exports`, así que hoy no se puede importar. Las piezas serán **React**: JC usa React en las apps, y Astro (el portfolio) puede montarlas como islas. Por dentro usarán los tokens semánticos. Cuando existan, vivirán en esa carpeta, se añadirán a `files` y a `exports` (por ejemplo `"./components/*"` o un export por componente), se verán en esta Storybook y se documentarán en la skill y en el CHANGELOG. Quien consuma el paquete las importará; no las copiará.

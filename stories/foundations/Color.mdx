@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ContrastReport, TokenSpecimens } from "../components/TokenSpecimens";
+
+<Meta title="Foundations/Color" />
+
+# Color
+
+Dos capas. **Core** son los primitivos (gris, rojo, verde, azul, blanco y negro). **Semantic** les pone un rol: fondo, superficie, texto, icono y borde.
+
+El tema oscuro es el valor de `:root`. El claro solo redefine los tokens que están en el JSON de light; el resto hereda. La muestra **Activo** usa la custom property, así que el interruptor Tema la cambia. Oscuro y Claro son el hex resuelto de cada JSON, para compararlos a la vez.
+
+## Primitivos
+
+<TokenSpecimens category="color" layer="core" />
+
+## Semánticos
+
+<TokenSpecimens category="color" layer="semantic" />
+
+## Contraste que no llega
+
+Los pares de abajo no alcanzan WCAG AA con los tokens actuales. Se documentan; no se corrigen en esta Storybook.
+
+<ContrastReport />
