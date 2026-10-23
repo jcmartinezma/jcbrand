@@ -1,0 +1,12 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { TokenSpecimens } from "../components/TokenSpecimens";
+
+<Meta title="Foundations/Opacidad" />
+
+# Opacidad
+
+Solo existe como primitivo. No hay capa semántica, ni un 100%. Para un velo de modal se usa `--color-bg-overlay`, que ya lleva alpha, en lugar de inventar un token de opacidad.
+
+El build escribe el número del JSON como porcentaje. La ficha de cada token muestra ese porcentaje.
+
+<TokenSpecimens category="opacity" layer="core" />

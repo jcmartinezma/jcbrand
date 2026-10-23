@@ -5,9 +5,10 @@ description: >-
   privado @jcmartinezma/jcbrand, Rethink Sans e IBM Plex Mono) instalándolo
   desde GitHub Packages. Úsala al crear o retocar UI, CSS, SCSS, Tailwind,
   Next.js, Astro o React; al configurar .npmrc y el token de lectura; al
-  auditar colores, tamaños o fuentes hardcodeados; y al publicar o actualizar
-  una versión del paquete. No copia dist/ ni fonts/ al proyecto destino. No
-  hace público el repo ni el paquete.
+  auditar colores, tamaños o fuentes hardcodeados; al mirar la Storybook del
+  repo como referencia visual; y al publicar o actualizar una versión del
+  paquete. No copia dist/ ni fonts/ al proyecto destino. No hace público el
+  repo ni el paquete. No despliega Storybook.
 ---
 
 # jcbrand
@@ -132,9 +133,15 @@ npm update @jcmartinezma/jcbrand
 
 Lee el [CHANGELOG.md](CHANGELOG.md) de la versión a la que saltas. Si renombró o eliminó tokens, pasa la auditoría y sustituye cada uso. Un patch no obliga a renombrar; aun así mira las pantallas, porque un hex puede haber cambiado debajo del mismo nombre.
 
+## Storybook
+
+En este repo, `npm run storybook` abre la referencia visual de los tokens (Foundations). No es un sitio público y no forma parte del paquete: `files` sigue siendo `dist/` y `fonts/`. No la despliegues a GitHub Pages. `npm run build-storybook` solo escribe `storybook-static/` en local.
+
+Los valores de esas páginas se leen de `tokens/`. Si no coinciden con `reference/`, manda `dist/` (sale de `tokens/`).
+
 ## Componentes, más adelante
 
-Hoy el paquete es tokens y fuentes. La carpeta `components/` del repo está reservada y vacía. Cuando existan piezas de UI:
+Hoy el paquete es tokens y fuentes. La carpeta `components/` del repo está reservada y vacía. Las piezas de UI, cuando existan, serán **React**. El CSS de cada pieza usa tokens semánticos. Un proyecto Astro las monta como islas; no hace falta reescribirlas en `.astro`. Se documentan en la Storybook de este repo.
 
 - El código vive en `components/`.
 - Entran en el paquete por `files` y por `exports` de `package.json` (por ejemplo `"./components/*"` o un export por pieza). Hasta entonces no hay export: no inventes `import '@jcmartinezma/jcbrand/components/...'`.

@@ -1,0 +1,18 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { TokenSpecimens } from "../components/TokenSpecimens";
+
+<Meta title="Foundations/Motion" />
+
+# Motion
+
+Duración, retraso y curva. El punto se mueve con la custom property de esa fila. En las filas de retraso, la duración del ejemplo es `--motion-duration-slow` para que el espera se note; el token de la fila sigue siendo el delay.
+
+Quien pida poco movimiento usa `--motion-duration-instant`. Si el sistema tiene `prefers-reduced-motion: reduce`, la animación de esta página se para.
+
+## Primitivos
+
+<TokenSpecimens category="motion" layer="core" />
+
+## Semánticos
+
+<TokenSpecimens category="motion" layer="semantic" />
