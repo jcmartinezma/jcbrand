@@ -127,4 +127,4 @@ Hechos de los archivos que cambian esa composición:
 - Hardcodear el hex «porque ya sé que el fondo es `#141414`». Mañana el token puede cambiar; el componente sigue diciendo `--color-bg-primary`.
 - Clases tipográficas en el HTML.
 - Tema claro por `prefers-color-scheme` o por una clase `.light` con colores copiados. El contrato es `data-theme="light"`.
-- Cargar las fuentes desde Google Fonts. Van en `fonts/`, con la licencia OFL al lado (`fonts/licenses/`). «Plex» es un Reserved Font Name: no renombres el archivo ni la familia.
+- Cargar las fuentes desde Google Fonts o copiar `fonts/` al proyecto. Entran con el paquete (`@jcmartinezma/jcbrand/fonts.css`), licencias OFL incluidas. «Plex» es un Reserved Font Name: no renombres el archivo ni la familia.

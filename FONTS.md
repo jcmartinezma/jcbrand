@@ -1,6 +1,6 @@
-# Fuentes de jcbrand
+# Fuentes de @jcmartinezma/jcbrand
 
-Las fuentes de marca viajan **dentro de este repo**, en `fonts/`. Quien aplique la marca copia esa carpeta al proyecto destino. No se instalan con npm ni se cargan desde Google Fonts o un CDN.
+El paquete incluye las fuentes de marca. Se instalan con `@jcmartinezma/jcbrand`, sin Google Fonts ni un CDN, y sin copiar `fonts/` al proyecto.
 
 ## Familias y pesos
 
@@ -16,7 +16,7 @@ Las fuentes de marca viajan **dentro de este repo**, en `fonts/`. Quien aplique 
 - No se incluyen las cursivas de IBM Plex Mono (no aparecen en los tokens). Se pueden añadir más adelante desde la misma fuente.
 - El peso 500 existe en el archivo Medium de IBM Plex Mono y como primitivo `--font-weights-300`, pero **no** hay token semántico para 500. Tampoco lo hay para 900.
 
-## Estructura
+## Estructura en el paquete
 
 ```
 fonts/
@@ -27,22 +27,22 @@ fonts/
     └── OFL-IBMPlexMono.txt
 ```
 
-Todas las rutas de `fonts.css` son relativas (`url('./files/...')`). Al copiar la carpeta `fonts/` entera a algo como `src/styles/jcbrand/fonts/`, esas rutas siguen valiendo en Vite, Next.js, webpack y Astro. No muevas `fonts.css` a otro sitio dejando `files/` atrás.
+Todas las rutas de `fonts.css` son relativas (`url('./files/...')`). Una vez instalado el paquete en `node_modules`, esas rutas las resuelve Vite, Next.js, webpack o Astro. No copies la carpeta a otro sitio.
 
 ## Uso en un proyecto
 
-Se copia `fonts/` junto con `dist/`. El import es una ruta del propio proyecto, no un nombre de paquete. En el entry (`main.ts`, `layout.tsx`, el layout de Astro, el CSS global):
+El `.npmrc` y el `GITHUB_TOKEN` están en el README. Con el paquete instalado, en el entry de la app (`main.ts`, `layout.tsx`, el layout de Astro, el CSS global):
 
 ```js
-import "../styles/jcbrand/fonts/fonts.css";
-import "../styles/jcbrand/dist/css/tokens.css";
+import '@jcmartinezma/jcbrand/fonts.css';
+import '@jcmartinezma/jcbrand/dist/css/tokens.css';
 ```
 
 o desde CSS:
 
 ```css
-@import "./jcbrand/fonts/fonts.css";
-@import "./jcbrand/dist/css/tokens.css";
+@import '@jcmartinezma/jcbrand/fonts.css';
+@import '@jcmartinezma/jcbrand/dist/css/tokens.css';
 ```
 
 La familia no se escribe a mano en los componentes. Los tokens ya traen el nombre y el fallback:
@@ -59,8 +59,18 @@ code, pre, .meta {
 
 `--text-style-display` usa la misma pila que `--text-style-base`. Cómo componer tamaño, peso e interlineado está en `SKILL.md` y en `reference/brand-rules.md`.
 
+## `package.json`
+
+Estos campos hacen que las fuentes entren en el paquete:
+
+- `"files": ["dist", "fonts"]`.
+- `exports`: `./fonts.css` → `./fonts/fonts.css`, y `./fonts/*` → `./fonts/*`. Los tokens (`./dist/css/tokens.css`, `./dist/scss`, …) están documentados en el README.
+- `"sideEffects": ["*.css"]` para que los bundlers no eliminen el import.
+
+`components/` no está en `files` ni en `exports`. Cuando haya componentes, se añadirán ahí; las fuentes no cambian de export.
+
 ## Origen y licencia
 
 - Origen: repositorio oficial de Google Fonts (`github.com/google/fonts`, rutas `ofl/rethinksans` y `ofl/ibmplexmono`). Rethink Sans v1.001, IBM Plex Mono v2.3.
 - Conversión TTF → WOFF2 con `fontTools` (solo compresión, sin subsetting ni cambios en los glifos ni en los nombres).
-- Licencia: **SIL Open Font License 1.1**. Se pueden redistribuir copiando `fonts/` siempre que se incluyan los archivos de licencia (`fonts/licenses/`). No se pueden vender por separado. "Plex" es un Reserved Font Name de IBM: no renombrar ni modificar la fuente bajo ese nombre.
+- Licencia: **SIL Open Font License 1.1**. Se pueden redistribuir dentro del paquete siempre que se incluyan los archivos de licencia (`fonts/licenses/`). No se pueden vender por separado. "Plex" es un Reserved Font Name de IBM: no renombrar ni modificar la fuente bajo ese nombre.

@@ -1,31 +1,29 @@
 # Cómo integrarlo en un proyecto
 
-La raíz de la skill es la carpeta que contiene `SKILL.md`. Desde la raíz del **proyecto destino**:
+No copies `dist/` ni `fonts/`. El proyecto destino instala el paquete privado. En su raíz, un `.npmrc` que sí se puede commitear (el token no va escrito):
+
+```
+@jcmartinezma:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+`GITHUB_TOKEN` es un PAT **classic** con `read:packages` y `repo`, en el entorno local y en el CI o el hosting. No lo guardes en un archivo del repo. En GitHub Actions el token automático del workflow no lee este paquete: el secret con el PAT classic se asigna a esa variable en el paso de install.
 
 ```bash
-mkdir -p src/styles/jcbrand
-cp -R /ruta/a/la/skill/dist src/styles/jcbrand/dist
-cp -R /ruta/a/la/skill/fonts src/styles/jcbrand/fonts
+export GITHUB_TOKEN="el PAT classic"
+npm install @jcmartinezma/jcbrand
 ```
 
-Si la skill está en `~/.cursor/skills/jcbrand`, esa es la ruta de origen. Tienen que llegar juntos:
+Lo instalado queda en `node_modules/@jcmartinezma/jcbrand/`. Ahí están `dist/css/tokens.css` (core + semantic) y `fonts/fonts.css` (`url('./files/...')`, con las licencias OFL al lado). No edites esa carpeta: el siguiente `npm update` la pisa. Los mixins y el CSS de los componentes viven en el proyecto destino.
 
-```
-src/styles/jcbrand/
-├── dist/
-│   ├── css/tokens.css          # core + semantic, un solo archivo
-│   ├── css/core/               # por si importas hoja a hoja
-│   ├── css/semantic/
-│   └── scss/                   # parciales; el índice hace @forward
-└── fonts/
-    ├── fonts.css               # @font-face, url('./files/...')
-    ├── files/                  # .woff2
-    └── licenses/               # OFL; viaja con las fuentes
+Imports que usa el resto de esta página:
+
+```js
+import '@jcmartinezma/jcbrand/fonts.css';
+import '@jcmartinezma/jcbrand/dist/css/tokens.css';
 ```
 
-No copies `tokens/`, `scripts/` ni `package.json`. No hace falta Node en el destino para usar la marca: `dist/` ya está generado.
-
-`fonts.css` y los tokens se importan **una vez**, en el entry global. En un CSS Module el bundler puede encapsular el `@import` y las variables no llegan al resto de la página.
+`fonts.css` y los tokens se importan **una vez**, en el entry global. En un CSS Module el bundler puede encapsular el `@import` y las variables no llegan al resto de la página. `sideEffects: ["*.css"]` del paquete evita que un bundler tire la hoja por no ver JS exportado.
 
 El `body` no puede quedarse con el preflight de Tailwind o del navegador. Esta base es el cuerpo de [brand-rules.md](brand-rules.md):
 
@@ -49,11 +47,11 @@ Tema claro, solo si el proyecto lo pide. Sin atributo, el tema es el oscuro:
 
 ## CSS plano
 
-En el CSS global, con rutas relativas al archivo:
+En el CSS global. El bundler resuelve el nombre del paquete desde `node_modules`:
 
 ```css
-@import "./jcbrand/fonts/fonts.css";
-@import "./jcbrand/dist/css/tokens.css";
+@import "@jcmartinezma/jcbrand/fonts.css";
+@import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 ```
 
 Un componente no lleva utilidad de tipo. La regla junta los tokens:
@@ -98,7 +96,7 @@ Ese HTML no dice `text-xl` ni `font-semibold`. Si hace falta un acento, una sola
 El índice emite las custom properties. `@use … as jcbrand` no les cambia el nombre: siguen siendo `--color-bg-primary`.
 
 ```scss
-@use "../jcbrand/dist/scss" as jcbrand;
+@use "@jcmartinezma/jcbrand/dist/scss" as jcbrand;
 
 @mixin text-title {
   font-family: var(--text-style-display);
@@ -113,16 +111,17 @@ El índice emite las custom properties. `@use … as jcbrand` no les cambia el n
 }
 ```
 
-Los mixins viven en el proyecto destino (`src/styles/type.scss` o junto al componente), no dentro de `dist/`. El próximo copiado de `dist/` pisaría cualquier edición ahí.
+Los mixins viven en el proyecto destino (`src/styles/type.scss` o junto al componente), no dentro de `node_modules`.
 
-Las fuentes no van en el SCSS generado. Impórtalas en el entry:
+Vite, webpack y el Sass de Next resuelven `@use "@jcmartinezma/jcbrand/dist/scss"` contra el export del paquete. Sass lanzado a pelo, sin ese resolver, no mira `node_modules`: en ese caso usa el import CSS de arriba.
 
-```scss
-@use "../jcbrand/fonts/fonts.css";
-@use "../jcbrand/dist/scss" as jcbrand;
+Las fuentes no van en el SCSS generado. En el entry JS o en el CSS global:
+
+```js
+import '@jcmartinezma/jcbrand/fonts.css';
 ```
 
-Si el compilador no traga un `.css` por `@use`, déjalo en el `<head>` o en el entry JS: `@import` / `import` de `fonts/fonts.css`. No redeclares los `@font-face`.
+No redeclares los `@font-face`.
 
 ## Tailwind
 
@@ -139,8 +138,8 @@ Aunque mapees `bg-jc-bg-primary`, no uses `bg-zinc-900`, `text-white`, `rounded-
 `tokens.css` tiene que cargarse para que esas variables existan. Va antes de `@import "tailwindcss"`. El `body` va **después** del preflight, o el fondo y la fuente vuelven a ser los genéricos.
 
 ```css
-@import "./jcbrand/fonts/fonts.css";
-@import "./jcbrand/dist/css/tokens.css";
+@import "@jcmartinezma/jcbrand/fonts.css";
+@import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 @import "tailwindcss";
 
 @theme inline {
@@ -318,8 +317,8 @@ export default {
 ```
 
 ```css
-@import "./jcbrand/fonts/fonts.css";
-@import "./jcbrand/dist/css/tokens.css";
+@import "@jcmartinezma/jcbrand/fonts.css";
+@import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 
 @tailwind base;
 @tailwind components;
@@ -335,8 +334,8 @@ No uses `next/font/google` ni `next/font/local` para estas familias: volverías 
 App Router, en el layout raíz para que cubra todas las rutas:
 
 ```tsx
-import "../styles/jcbrand/fonts/fonts.css";
-import "../styles/jcbrand/dist/css/tokens.css";
+import "@jcmartinezma/jcbrand/fonts.css";
+import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -352,7 +351,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 Pages Router: los mismos `import` en `pages/_app.tsx`.
 
-Con Vite + React, los mismos `import` en `main.tsx`, antes del render. Las `url('./files/...')` las resuelve el bundler porque el CSS vive dentro de `src/`. No muevas solo `fonts.css` a `public/` dejando los `.woff2` en otro sitio: la ruta relativa se rompería.
+Con Vite + React, los mismos `import` en `main.tsx`, antes del render. Las `url('./files/...')` de `fonts.css` las resuelve el bundler dentro de `node_modules/@jcmartinezma/jcbrand/fonts/`. No copies los `.woff2` a `public/`.
 
 ## Astro
 
@@ -360,8 +359,8 @@ En el layout base, para que cada página herede las variables:
 
 ```astro
 ---
-import "../styles/jcbrand/fonts/fonts.css";
-import "../styles/jcbrand/dist/css/tokens.css";
+import "@jcmartinezma/jcbrand/fonts.css";
+import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 import "../styles/global.css";
 ---
 <html lang="es">
