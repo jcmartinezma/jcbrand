@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "text": {
+    "$description": "Semantic typography roles. Each token aliases a core font token",
+    "style": {
+      "$description": "Font family roles",
+      "$type": "fontFamily",
+      "display": { "$value": "{font.families.sans-1}" },
+      "base": { "$value": "{font.families.sans-1}" },
+      "decor": { "$value": "{font.families.monospace-1}" }
+    },
+    "size": {
+      "$description": "Text sizes",
+      "$type": "dimension",
+      "xxs": { "$value": "{font.size.100}" },
+      "xs": { "$value": "{font.size.200}" },
+      "sm": { "$value": "{font.size.300}" },
+      "md": { "$value": "{font.size.400}" },
+      "lg": { "$value": "{font.size.500}" },
+      "xl": { "$value": "{font.size.600}" },
+      "2xl": { "$value": "{font.size.700}" },
+      "3xl": { "$value": "{font.size.800}" },
+      "4xl": { "$value": "{font.size.900}" }
+    },
+    "weight": {
+      "$description": "Text weights",
+      "$type": "fontWeight",
+      "light": { "$value": "{font.weights.100}" },
+      "normal": { "$value": "{font.weights.200}" },
+      "semibold": { "$value": "{font.weights.400}" },
+      "bold": { "$value": "{font.weights.500}" },
+      "extrabold": { "$value": "{font.weights.600}" }
+    },
+    "line-height": {
+      "$description": "Text line heights",
+      "$type": "dimension",
+      "xs": { "$value": "{font.line-height.100}" },
+      "sm": { "$value": "{font.line-height.200}" },
+      "md": { "$value": "{font.line-height.300}" },
+      "lg": { "$value": "{font.line-height.500}" },
+      "xl": { "$value": "{font.line-height.400}" },
+      "2xl": { "$value": "{font.line-height.600}" },
+      "3xl": { "$value": "{font.line-height.700}" }
+    },
+    "letter-spacing": {
+      "$description": "Text letter spacing",
+      "$type": "dimension",
+      "tight": { "$value": "{font.letter-spacings.minus-100}" },
+      "normal": { "$value": "{font.letter-spacings.100}" },
+      "wide": { "$value": "{font.letter-spacings.200}" },
+      "wider": { "$value": "{font.letter-spacings.300}" }
+    }
+  }
+}

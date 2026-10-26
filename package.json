@@ -1,6 +1,7 @@
 {
   "name": "@jcmartinezma/jcbrand",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/jcmartinezma/jcbrand.git"
@@ -12,9 +13,6 @@
   "sideEffects": [
     "*.css"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "exports": {
     "./fonts.css": "./fonts/fonts.css",
     "./fonts/*": "./fonts/*",
@@ -47,5 +45,8 @@
     "style-dictionary": "^5.7.0",
     "typescript": "^7.0.2",
     "vite": "^7.3.7"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }

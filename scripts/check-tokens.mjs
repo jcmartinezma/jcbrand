@@ -23,25 +23,29 @@ for (const layer of ["core", "semantic"])
     try { files.push({ rel: `${layer}/${f}`, json: JSON.parse(readFileSync(p, "utf8")) }); }
     catch (e) { fail(`${layer}/${f}: invalid JSON (${e.message})`); }
   }
-const flatten = (node, path = [], out = []) => {
+// A token without its own $type inherits the nearest parent group's $type (DTCG).
+const flatten = (node, path = [], out = [], type = node.$type) => {
   for (const [k, v] of Object.entries(node)) {
     if (k.startsWith("$") || typeof v !== "object" || v === null) continue;
-    if ("$value" in v) out.push({ path: [...path, k].join("."), tok: v });
-    else flatten(v, [...path, k], out);
+    if ("$value" in v) out.push({ path: [...path, k].join("."), tok: { ...v, $type: v.$type ?? type } });
+    else flatten(v, [...path, k], out, v.$type ?? type);
   }
   return out;
 };
+// Files are named <name>.core.json, <name>.semantic.json or <name>.semantic.<theme>.json.
+// The original SCSS is _<name>.core.scss / _<name>.semantic.scss (both themes share one SCSS).
+const sourceOf = (f) => `${f.rel.split("/")[0]}/_${f.rel.split("/").pop().replace(/\.(dark|light)(?=\.json$)/, "").replace(/\.json$/, ".scss")}`;
 const base = new Map();   // core + semantic default (:root)
 const light = new Map();  // [data-theme="light"] overrides
 for (const f of files) {
-  const sel = f.json.$extensions?.[NS]?.selector ?? ":root";
+  // <name>.semantic.light.json holds only the light-theme overrides; every other file is :root.
+  const sel = f.rel.endsWith(".semantic.light.json") ? '[data-theme="light"]' : ":root";
   const target = sel === ":root" ? base : light;
   for (const t of flatten(f.json)) {
     t.file = f.rel; t.selector = sel;
     if (target.has(t.path)) fail(`duplicate path ${t.path} (${f.rel})`);
     target.set(t.path, t);
-    const ext = t.tok.$extensions?.[NS];
-    if (!ext?.cssVar) fail(`${t.path}: missing $extensions.${NS}.cssVar`);
+    // cssVar is optional: without it the name is derived from the path (see cssVarOf).
     if (!t.tok.$type) fail(`${t.path}: missing $type`);
   }
 }
@@ -65,12 +69,31 @@ for (const t of [...base.values(), ...light.values()]) {
   resolve(t);
 }
 
+// No token has a cssVar: the name comes from the path (color.gray.100 -> --color-gray-100).
+const cssVarOf = (t) => t.tok.$extensions?.[NS]?.cssVar ?? `--${t.path.replaceAll(".", "-")}`;
+
+// DTCG shadow -> CSS box-shadow. Dimensions are {value, unit}; colors are {colorSpace: "srgb", components, alpha}.
+// A zero spread is left out, so `0 1px 2px rgb(0 0 0 / 0.16)` stays exactly as authored.
+const dimCss = (d) => (typeof d === "string" ? d : d.value === 0 ? "0" : `${d.value}${d.unit}`);
+const colorCss = (c) => {
+  if (typeof c === "string") return c;
+  if (c.colorSpace !== "srgb") throw new Error(`shadow color space "${c.colorSpace}" is not supported`);
+  const rgb = c.components.map((part) => Math.round(part * 255)).join(" ");
+  return `rgb(${rgb}${c.alpha != null && c.alpha < 1 ? ` / ${c.alpha}` : ""})`;
+};
+const shadowCss = (value) => [].concat(value)
+  .map((layer) => {
+    const spread = layer.spread == null || (typeof layer.spread === "object" && layer.spread.value === 0) ? null : dimCss(layer.spread);
+    return [dimCss(layer.offsetX), dimCss(layer.offsetY), dimCss(layer.blur), spread, colorCss(layer.color)].filter((part) => part != null).join(" ");
+  })
+  .join(", ");
+
 // ---------- CSS formatter (reproduces JC's authored values)
 const cssValue = (t) => {
   const v = t.tok.$value, ext = t.tok.$extensions?.[NS] ?? {};
   const m = typeof v === "string" && v.match(ALIAS);
   if (m) {
-    const ref = `var(${base.get(m[1])?.tok.$extensions[NS].cssVar})`;
+    const ref = `var(${cssVarOf(base.get(m[1]))})`;
     return ext.alpha != null ? `rgb(from ${ref} r g b / ${Math.round(ext.alpha * 100)}%)` : ref;
   }
   switch (t.tok.$type) {
@@ -78,16 +101,16 @@ const cssValue = (t) => {
     case "fontWeight": return String(v);
     case "cubicBezier": return `cubic-bezier(${v.join(", ")})`;
     case "number": return ext.cssFormat === "percent" ? `${Math.round(v * 100)}%` : String(v);
-    case "shadow": return [].concat(v).map((s) => [s.offsetX, s.offsetY, s.blur, s.spread, s.color].filter((x) => x != null).join(" ")).join(", ");
+    case "shadow": return shadowCss(v);
     default: return String(v);
   }
 };
 const generated = new Map(); // key "source|selector" -> [[var, value]]
 for (const t of [...base.values(), ...light.values()]) {
   const f = files.find((f) => f.rel === t.file);
-  const key = `${f.json.$extensions[NS].source}|${t.selector}`;
+  const key = `${sourceOf(f)}|${t.selector}`;
   if (!generated.has(key)) generated.set(key, []);
-  generated.get(key).push([t.tok.$extensions[NS].cssVar, cssValue(t)]);
+  generated.get(key).push([cssVarOf(t), cssValue(t)]);
 }
 if (emit) {
   const css = [...generated].map(([k, d]) => `/* ${k.split("|")[0]} */\n${k.split("|")[1]} {\n${d.map(([n, v]) => `  ${n}: ${v};`).join("\n")}\n}`).join("\n\n");

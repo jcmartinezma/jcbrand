@@ -1,49 +1,49 @@
 /**
  * No edites este archivo a mano.
  * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
- * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ * Core: el nombre sale de la ruta (color.gray.100 -> --color-gray-100). Semantic: de $extensions["com.jcbrand"].cssVar.
  */
 
 /* core/color */
 :root {
-  --black: #000000;
-  --blue-100: #DADCDF;
-  --blue-200: #B7CDED;
-  --blue-300: #89ABDE;
-  --blue-400: #5B88CB;
-  --blue-500: #305FA8;
-  --blue-600: #214C8C;
-  --blue-700: #0F2342;
-  --blue-800: #030B18;
-  --gray-100: #EFEFEF;
-  --gray-100-60: rgb(from var(--gray-100) r g b / 60%);
-  --gray-100-80: rgb(from var(--gray-100) r g b / 80%);
-  --gray-200: #D5D5D5;
-  --gray-300: #AAAAAA;
-  --gray-400: #8A8A8A;
-  --gray-500: #636363;
-  --gray-600: #4A4A4A;
-  --gray-700: #242424;
-  --gray-800: #141414;
-  --gray-800-60: rgb(from var(--gray-800) r g b / 60%);
-  --gray-800-80: rgb(from var(--gray-800) r g b / 80%);
-  --green-100: #F3F8DE;
-  --green-200: #DEEEA0;
-  --green-300: #C8E169;
-  --green-400: #B4D249;
-  --green-500: #A1BE2C;
-  --green-600: #7D9420;
-  --green-700: #485612;
-  --green-800: #0D1003;
-  --red-100: #DFDADA;
-  --red-200: #EDB8B8;
-  --red-300: #DE8A8A;
-  --red-400: #CB5C5C;
-  --red-500: #A83030;
-  --red-600: #8C2222;
-  --red-700: #420F0F;
-  --red-800: #0E0202;
-  --white: #FFFFFF;
+  --color-black: #000000;
+  --color-blue-100: #DADCDF;
+  --color-blue-200: #B7CDED;
+  --color-blue-300: #89ABDE;
+  --color-blue-400: #5B88CB;
+  --color-blue-500: #305FA8;
+  --color-blue-600: #214C8C;
+  --color-blue-700: #0F2342;
+  --color-blue-800: #030B18;
+  --color-gray-100: #EFEFEF;
+  --color-gray-100-60: rgb(from var(--color-gray-100) r g b / 60%);
+  --color-gray-100-80: rgb(from var(--color-gray-100) r g b / 80%);
+  --color-gray-200: #D5D5D5;
+  --color-gray-300: #AAAAAA;
+  --color-gray-400: #8A8A8A;
+  --color-gray-500: #636363;
+  --color-gray-600: #4A4A4A;
+  --color-gray-700: #242424;
+  --color-gray-800: #141414;
+  --color-gray-800-60: rgb(from var(--color-gray-800) r g b / 60%);
+  --color-gray-800-80: rgb(from var(--color-gray-800) r g b / 80%);
+  --color-green-100: #F3F8DE;
+  --color-green-200: #DEEEA0;
+  --color-green-300: #C8E169;
+  --color-green-400: #B4D249;
+  --color-green-500: #A1BE2C;
+  --color-green-600: #7D9420;
+  --color-green-700: #485612;
+  --color-green-800: #0D1003;
+  --color-red-100: #DFDADA;
+  --color-red-200: #EDB8B8;
+  --color-red-300: #DE8A8A;
+  --color-red-400: #CB5C5C;
+  --color-red-500: #A83030;
+  --color-red-600: #8C2222;
+  --color-red-700: #420F0F;
+  --color-red-800: #0E0202;
+  --color-white: #FFFFFF;
 }
 
 /* core/typography */
@@ -146,66 +146,66 @@
 
 /* semantic/color */
 :root {
-  --color-bg-overlay: var(--gray-800-80);
-  --color-bg-primary: var(--gray-800);
-  --color-bg-secondary: var(--gray-700);
-  --color-bg-secondary-inverse: var(--white);
-  --color-bg-tertiary: var(--gray-600);
-  --color-bg-tertiary-inverse: var(--white);
-  --color-border-accent: var(--green-600);
-  --color-border-danger: var(--red-600);
-  --color-border-primary: var(--gray-100);
-  --color-border-secondary: var(--gray-600);
-  --color-border-secondary-hover: var(--gray-300);
-  --color-border-tertiary: var(--gray-700);
-  --color-icon-accent: var(--green-400);
-  --color-icon-primary: var(--gray-200);
-  --color-icon-secondary: var(--gray-400);
-  --color-icon-tertiary: var(--gray-500);
-  --color-surface-accent: var(--green-700);
-  --color-surface-danger: var(--red-700);
-  --color-surface-primary: var(--gray-400);
-  --color-surface-primary-hover: var(--gray-400);
-  --color-surface-secondary: var(--gray-600);
-  --color-surface-secondary-inverse: var(--gray-200);
-  --color-surface-tertiary: var(--gray-700);
-  --color-surface-tertiary-inverse: var(--gray-100);
-  --color-text-accent: var(--green-400);
-  --color-text-danger: var(--red-400);
-  --color-text-primary: var(--gray-100);
-  --color-text-secondary: var(--gray-400);
-  --color-text-secondary-hover: var(--gray-200);
-  --color-text-secondary-inverse: var(--gray-800);
-  --color-text-tertiary: var(--gray-500);
+  --color-bg-overlay: var(--color-gray-800-80);
+  --color-bg-primary: var(--color-gray-800);
+  --color-bg-secondary: var(--color-gray-700);
+  --color-bg-secondary-inverse: var(--color-white);
+  --color-bg-tertiary: var(--color-gray-600);
+  --color-bg-tertiary-inverse: var(--color-white);
+  --color-border-accent: var(--color-green-600);
+  --color-border-danger: var(--color-red-600);
+  --color-border-primary: var(--color-gray-100);
+  --color-border-secondary: var(--color-gray-600);
+  --color-border-secondary-hover: var(--color-gray-300);
+  --color-border-tertiary: var(--color-gray-700);
+  --color-icon-accent: var(--color-green-400);
+  --color-icon-primary: var(--color-gray-200);
+  --color-icon-secondary: var(--color-gray-400);
+  --color-icon-tertiary: var(--color-gray-500);
+  --color-surface-accent: var(--color-green-700);
+  --color-surface-danger: var(--color-red-700);
+  --color-surface-primary: var(--color-gray-400);
+  --color-surface-primary-hover: var(--color-gray-400);
+  --color-surface-secondary: var(--color-gray-600);
+  --color-surface-secondary-inverse: var(--color-gray-200);
+  --color-surface-tertiary: var(--color-gray-700);
+  --color-surface-tertiary-inverse: var(--color-gray-100);
+  --color-text-accent: var(--color-green-400);
+  --color-text-danger: var(--color-red-400);
+  --color-text-primary: var(--color-gray-100);
+  --color-text-secondary: var(--color-gray-400);
+  --color-text-secondary-hover: var(--color-gray-200);
+  --color-text-secondary-inverse: var(--color-gray-800);
+  --color-text-tertiary: var(--color-gray-500);
 }
 
 [data-theme="light"] {
-  --color-bg-overlay: var(--gray-100-80);
-  --color-bg-primary: var(--white);
-  --color-bg-secondary: var(--gray-100);
-  --color-bg-tertiary: var(--gray-200);
-  --color-border-accent: var(--green-400);
-  --color-border-danger: var(--red-400);
-  --color-border-primary: var(--gray-400);
-  --color-border-secondary: var(--gray-300);
-  --color-border-secondary-hover: var(--gray-400);
-  --color-border-tertiary: var(--gray-200);
-  --color-icon-accent: var(--green-500);
-  --color-icon-primary: var(--gray-500);
-  --color-icon-secondary: var(--gray-600);
-  --color-icon-tertiary: var(--gray-400);
-  --color-surface-accent: var(--green-200);
-  --color-surface-danger: var(--red-200);
-  --color-surface-secondary: var(--gray-300);
-  --color-surface-tertiary: var(--gray-200);
-  --color-surface-tertiary-inverse: var(--white);
-  --color-text-accent: var(--green-500);
-  --color-text-danger: var(--red-500);
-  --color-text-primary: var(--gray-700);
-  --color-text-secondary: var(--gray-500);
-  --color-text-secondary-hover: var(--gray-400);
-  --color-text-secondary-inverse: var(--gray-100);
-  --color-text-tertiary: var(--gray-400);
+  --color-bg-overlay: var(--color-gray-100-80);
+  --color-bg-primary: var(--color-white);
+  --color-bg-secondary: var(--color-gray-100);
+  --color-bg-tertiary: var(--color-gray-200);
+  --color-border-accent: var(--color-green-400);
+  --color-border-danger: var(--color-red-400);
+  --color-border-primary: var(--color-gray-400);
+  --color-border-secondary: var(--color-gray-300);
+  --color-border-secondary-hover: var(--color-gray-400);
+  --color-border-tertiary: var(--color-gray-200);
+  --color-icon-accent: var(--color-green-500);
+  --color-icon-primary: var(--color-gray-500);
+  --color-icon-secondary: var(--color-gray-600);
+  --color-icon-tertiary: var(--color-gray-400);
+  --color-surface-accent: var(--color-green-200);
+  --color-surface-danger: var(--color-red-200);
+  --color-surface-secondary: var(--color-gray-300);
+  --color-surface-tertiary: var(--color-gray-200);
+  --color-surface-tertiary-inverse: var(--color-white);
+  --color-text-accent: var(--color-green-500);
+  --color-text-danger: var(--color-red-500);
+  --color-text-primary: var(--color-gray-700);
+  --color-text-secondary: var(--color-gray-500);
+  --color-text-secondary-hover: var(--color-gray-400);
+  --color-text-secondary-inverse: var(--color-gray-100);
+  --color-text-tertiary: var(--color-gray-400);
 }
 
 /* semantic/typography */

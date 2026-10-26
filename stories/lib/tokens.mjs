@@ -1,41 +1,41 @@
 // Lee los JSON DTCG de tokens/ y los aplana.
 // Las páginas de Storybook pintan esto: no hay hex ni px copiados a mano.
-import coreBlur from "../../tokens/core/blur.json" with { type: "json" };
-import coreColor from "../../tokens/core/color.json" with { type: "json" };
-import coreMotion from "../../tokens/core/motion.json" with { type: "json" };
-import coreOpacity from "../../tokens/core/opacity.json" with { type: "json" };
-import coreRadius from "../../tokens/core/radius.json" with { type: "json" };
-import coreShadow from "../../tokens/core/shadow.json" with { type: "json" };
-import coreSpacing from "../../tokens/core/spacing.json" with { type: "json" };
-import coreTypography from "../../tokens/core/typography.json" with { type: "json" };
-import semanticBlur from "../../tokens/semantic/blur.json" with { type: "json" };
-import semanticColorDark from "../../tokens/semantic/color.dark.json" with { type: "json" };
-import semanticColorLight from "../../tokens/semantic/color.light.json" with { type: "json" };
-import semanticMotion from "../../tokens/semantic/motion.json" with { type: "json" };
-import semanticRadius from "../../tokens/semantic/radius.json" with { type: "json" };
-import semanticShadow from "../../tokens/semantic/shadow.json" with { type: "json" };
-import semanticSpacing from "../../tokens/semantic/spacing.json" with { type: "json" };
-import semanticTypography from "../../tokens/semantic/typography.json" with { type: "json" };
+import coreBlur from "../../tokens/core/blur.core.json" with { type: "json" };
+import coreColor from "../../tokens/core/color.core.json" with { type: "json" };
+import coreMotion from "../../tokens/core/motion.core.json" with { type: "json" };
+import coreOpacity from "../../tokens/core/opacity.core.json" with { type: "json" };
+import coreRadius from "../../tokens/core/radius.core.json" with { type: "json" };
+import coreShadow from "../../tokens/core/shadow.core.json" with { type: "json" };
+import coreSpacing from "../../tokens/core/spacing.core.json" with { type: "json" };
+import coreTypography from "../../tokens/core/typography.core.json" with { type: "json" };
+import semanticBlur from "../../tokens/semantic/blur.semantic.json" with { type: "json" };
+import semanticColorDark from "../../tokens/semantic/color.semantic.dark.json" with { type: "json" };
+import semanticColorLight from "../../tokens/semantic/color.semantic.light.json" with { type: "json" };
+import semanticMotion from "../../tokens/semantic/motion.semantic.json" with { type: "json" };
+import semanticRadius from "../../tokens/semantic/radius.semantic.json" with { type: "json" };
+import semanticShadow from "../../tokens/semantic/shadow.semantic.json" with { type: "json" };
+import semanticSpacing from "../../tokens/semantic/spacing.semantic.json" with { type: "json" };
+import semanticTypography from "../../tokens/semantic/typography.semantic.json" with { type: "json" };
 
 const NS = "com.jcbrand";
 const ALIAS = /^\{([^}]+)\}$/;
 
 const FILES = [
-  { category: "color", layer: "core", path: "tokens/core/color.json", data: coreColor },
-  { category: "color", layer: "semantic", path: "tokens/semantic/color.dark.json", data: semanticColorDark },
-  { category: "typography", layer: "core", path: "tokens/core/typography.json", data: coreTypography },
-  { category: "typography", layer: "semantic", path: "tokens/semantic/typography.json", data: semanticTypography },
-  { category: "spacing", layer: "core", path: "tokens/core/spacing.json", data: coreSpacing },
-  { category: "spacing", layer: "semantic", path: "tokens/semantic/spacing.json", data: semanticSpacing },
-  { category: "radius", layer: "core", path: "tokens/core/radius.json", data: coreRadius },
-  { category: "radius", layer: "semantic", path: "tokens/semantic/radius.json", data: semanticRadius },
-  { category: "shadow", layer: "core", path: "tokens/core/shadow.json", data: coreShadow },
-  { category: "shadow", layer: "semantic", path: "tokens/semantic/shadow.json", data: semanticShadow },
-  { category: "motion", layer: "core", path: "tokens/core/motion.json", data: coreMotion },
-  { category: "motion", layer: "semantic", path: "tokens/semantic/motion.json", data: semanticMotion },
-  { category: "blur", layer: "core", path: "tokens/core/blur.json", data: coreBlur },
-  { category: "blur", layer: "semantic", path: "tokens/semantic/blur.json", data: semanticBlur },
-  { category: "opacity", layer: "core", path: "tokens/core/opacity.json", data: coreOpacity },
+  { category: "color", layer: "core", path: "tokens/core/color.core.json", data: coreColor },
+  { category: "color", layer: "semantic", path: "tokens/semantic/color.semantic.dark.json", data: semanticColorDark },
+  { category: "typography", layer: "core", path: "tokens/core/typography.core.json", data: coreTypography },
+  { category: "typography", layer: "semantic", path: "tokens/semantic/typography.semantic.json", data: semanticTypography },
+  { category: "spacing", layer: "core", path: "tokens/core/spacing.core.json", data: coreSpacing },
+  { category: "spacing", layer: "semantic", path: "tokens/semantic/spacing.semantic.json", data: semanticSpacing },
+  { category: "radius", layer: "core", path: "tokens/core/radius.core.json", data: coreRadius },
+  { category: "radius", layer: "semantic", path: "tokens/semantic/radius.semantic.json", data: semanticRadius },
+  { category: "shadow", layer: "core", path: "tokens/core/shadow.core.json", data: coreShadow },
+  { category: "shadow", layer: "semantic", path: "tokens/semantic/shadow.semantic.json", data: semanticShadow },
+  { category: "motion", layer: "core", path: "tokens/core/motion.core.json", data: coreMotion },
+  { category: "motion", layer: "semantic", path: "tokens/semantic/motion.semantic.json", data: semanticMotion },
+  { category: "blur", layer: "core", path: "tokens/core/blur.core.json", data: coreBlur },
+  { category: "blur", layer: "semantic", path: "tokens/semantic/blur.semantic.json", data: semanticBlur },
+  { category: "opacity", layer: "core", path: "tokens/core/opacity.core.json", data: coreOpacity },
 ];
 
 const GROUP_LABELS = {
@@ -73,13 +73,14 @@ function isToken(value) {
   return Boolean(value) && typeof value === "object" && "$value" in value;
 }
 
-function flatten(node, path = []) {
+// Un token sin $type propio hereda el del grupo padre más cercano (DTCG).
+function flatten(node, path = [], type = node?.$type) {
   const tokens = [];
   for (const [key, value] of Object.entries(node ?? {})) {
     if (key.startsWith("$") || !value || typeof value !== "object") continue;
     const next = [...path, key];
-    if (isToken(value)) tokens.push(normalize(next, value));
-    else tokens.push(...flatten(value, next));
+    if (isToken(value)) tokens.push(normalize(next, { ...value, $type: value.$type ?? type }));
+    else tokens.push(...flatten(value, next, value.$type ?? type));
   }
   return tokens;
 }
@@ -96,17 +97,29 @@ function normalize(path, token) {
     raw,
     alias,
     alpha: typeof ext.alpha === "number" ? ext.alpha : null,
-    cssVar: ext.cssVar ?? null,
+    cssVar: ext.cssVar ?? `--${path.join("-")}`,
     cssFormat: ext.cssFormat ?? null,
   };
+}
+
+// Sombra DTCG -> CSS. Dimensiones {value, unit}; colores {colorSpace: "srgb", components, alpha}.
+// Un spread de 0 se omite, igual que en el CSS publicado.
+function dimCss(d) {
+  return typeof d === "string" ? d : d.value === 0 ? "0" : `${d.value}${d.unit}`;
+}
+
+function colorCss(c) {
+  if (typeof c === "string") return c;
+  const rgb = c.components.map((part) => Math.round(part * 255)).join(" ");
+  return `rgb(${rgb}${c.alpha != null && c.alpha < 1 ? ` / ${c.alpha}` : ""})`;
 }
 
 function formatShadow(value) {
   const layers = Array.isArray(value) ? value : [value];
   return layers
     .map((layer) => {
-      const spread = layer.spread && layer.spread !== "0" ? ` ${layer.spread}` : "";
-      return `${layer.offsetX} ${layer.offsetY} ${layer.blur}${spread} ${layer.color}`;
+      const spread = layer.spread == null || (typeof layer.spread === "object" && layer.spread.value === 0) ? "" : ` ${dimCss(layer.spread)}`;
+      return `${dimCss(layer.offsetX)} ${dimCss(layer.offsetY)} ${dimCss(layer.blur)}${spread} ${colorCss(layer.color)}`;
     })
     .join(", ");
 }
@@ -201,7 +214,7 @@ function tokensFor(category, layer) {
 export function sourceOf(category, layer) {
   if (category === "color" && layer === "semantic") {
     return {
-      path: "tokens/semantic/color.dark.json + color.light.json",
+      path: "tokens/semantic/color.semantic.dark.json + color.semantic.light.json",
       description: `${semanticColorDark.$description ?? ""} ${semanticColorLight.$description ?? ""}`.trim(),
     };
   }

@@ -1,68 +1,68 @@
 /**
  * No edites este archivo a mano.
  * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
- * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ * Core: el nombre sale de la ruta (color.gray.100 -> --color-gray-100). Semantic: de $extensions["com.jcbrand"].cssVar.
  */
 
 :root {
-  --color-bg-overlay: var(--gray-800-80);
-  --color-bg-primary: var(--gray-800);
-  --color-bg-secondary: var(--gray-700);
-  --color-bg-secondary-inverse: var(--white);
-  --color-bg-tertiary: var(--gray-600);
-  --color-bg-tertiary-inverse: var(--white);
-  --color-border-accent: var(--green-600);
-  --color-border-danger: var(--red-600);
-  --color-border-primary: var(--gray-100);
-  --color-border-secondary: var(--gray-600);
-  --color-border-secondary-hover: var(--gray-300);
-  --color-border-tertiary: var(--gray-700);
-  --color-icon-accent: var(--green-400);
-  --color-icon-primary: var(--gray-200);
-  --color-icon-secondary: var(--gray-400);
-  --color-icon-tertiary: var(--gray-500);
-  --color-surface-accent: var(--green-700);
-  --color-surface-danger: var(--red-700);
-  --color-surface-primary: var(--gray-400);
-  --color-surface-primary-hover: var(--gray-400);
-  --color-surface-secondary: var(--gray-600);
-  --color-surface-secondary-inverse: var(--gray-200);
-  --color-surface-tertiary: var(--gray-700);
-  --color-surface-tertiary-inverse: var(--gray-100);
-  --color-text-accent: var(--green-400);
-  --color-text-danger: var(--red-400);
-  --color-text-primary: var(--gray-100);
-  --color-text-secondary: var(--gray-400);
-  --color-text-secondary-hover: var(--gray-200);
-  --color-text-secondary-inverse: var(--gray-800);
-  --color-text-tertiary: var(--gray-500);
+  --color-bg-overlay: var(--color-gray-800-80);
+  --color-bg-primary: var(--color-gray-800);
+  --color-bg-secondary: var(--color-gray-700);
+  --color-bg-secondary-inverse: var(--color-white);
+  --color-bg-tertiary: var(--color-gray-600);
+  --color-bg-tertiary-inverse: var(--color-white);
+  --color-border-accent: var(--color-green-600);
+  --color-border-danger: var(--color-red-600);
+  --color-border-primary: var(--color-gray-100);
+  --color-border-secondary: var(--color-gray-600);
+  --color-border-secondary-hover: var(--color-gray-300);
+  --color-border-tertiary: var(--color-gray-700);
+  --color-icon-accent: var(--color-green-400);
+  --color-icon-primary: var(--color-gray-200);
+  --color-icon-secondary: var(--color-gray-400);
+  --color-icon-tertiary: var(--color-gray-500);
+  --color-surface-accent: var(--color-green-700);
+  --color-surface-danger: var(--color-red-700);
+  --color-surface-primary: var(--color-gray-400);
+  --color-surface-primary-hover: var(--color-gray-400);
+  --color-surface-secondary: var(--color-gray-600);
+  --color-surface-secondary-inverse: var(--color-gray-200);
+  --color-surface-tertiary: var(--color-gray-700);
+  --color-surface-tertiary-inverse: var(--color-gray-100);
+  --color-text-accent: var(--color-green-400);
+  --color-text-danger: var(--color-red-400);
+  --color-text-primary: var(--color-gray-100);
+  --color-text-secondary: var(--color-gray-400);
+  --color-text-secondary-hover: var(--color-gray-200);
+  --color-text-secondary-inverse: var(--color-gray-800);
+  --color-text-tertiary: var(--color-gray-500);
 }
 
 [data-theme="light"] {
-  --color-bg-overlay: var(--gray-100-80);
-  --color-bg-primary: var(--white);
-  --color-bg-secondary: var(--gray-100);
-  --color-bg-tertiary: var(--gray-200);
-  --color-border-accent: var(--green-400);
-  --color-border-danger: var(--red-400);
-  --color-border-primary: var(--gray-400);
-  --color-border-secondary: var(--gray-300);
-  --color-border-secondary-hover: var(--gray-400);
-  --color-border-tertiary: var(--gray-200);
-  --color-icon-accent: var(--green-500);
-  --color-icon-primary: var(--gray-500);
-  --color-icon-secondary: var(--gray-600);
-  --color-icon-tertiary: var(--gray-400);
-  --color-surface-accent: var(--green-200);
-  --color-surface-danger: var(--red-200);
-  --color-surface-secondary: var(--gray-300);
-  --color-surface-tertiary: var(--gray-200);
-  --color-surface-tertiary-inverse: var(--white);
-  --color-text-accent: var(--green-500);
-  --color-text-danger: var(--red-500);
-  --color-text-primary: var(--gray-700);
-  --color-text-secondary: var(--gray-500);
-  --color-text-secondary-hover: var(--gray-400);
-  --color-text-secondary-inverse: var(--gray-100);
-  --color-text-tertiary: var(--gray-400);
+  --color-bg-overlay: var(--color-gray-100-80);
+  --color-bg-primary: var(--color-white);
+  --color-bg-secondary: var(--color-gray-100);
+  --color-bg-tertiary: var(--color-gray-200);
+  --color-border-accent: var(--color-green-400);
+  --color-border-danger: var(--color-red-400);
+  --color-border-primary: var(--color-gray-400);
+  --color-border-secondary: var(--color-gray-300);
+  --color-border-secondary-hover: var(--color-gray-400);
+  --color-border-tertiary: var(--color-gray-200);
+  --color-icon-accent: var(--color-green-500);
+  --color-icon-primary: var(--color-gray-500);
+  --color-icon-secondary: var(--color-gray-600);
+  --color-icon-tertiary: var(--color-gray-400);
+  --color-surface-accent: var(--color-green-200);
+  --color-surface-danger: var(--color-red-200);
+  --color-surface-secondary: var(--color-gray-300);
+  --color-surface-tertiary: var(--color-gray-200);
+  --color-surface-tertiary-inverse: var(--color-white);
+  --color-text-accent: var(--color-green-500);
+  --color-text-danger: var(--color-red-500);
+  --color-text-primary: var(--color-gray-700);
+  --color-text-secondary: var(--color-gray-500);
+  --color-text-secondary-hover: var(--color-gray-400);
+  --color-text-secondary-inverse: var(--color-gray-100);
+  --color-text-tertiary: var(--color-gray-400);
 }

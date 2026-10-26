@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "motion": {
+    "$description": "Semantic motion roles. Each token aliases a core motion token",
+    "duration": {
+      "$description": "Duration roles",
+      "$type": "duration",
+      "instant": { "$value": "{motion.duration.0}" },
+      "fast": { "$value": "{motion.duration.100}" },
+      "exit": { "$value": "{motion.duration.200}" },
+      "normal": { "$value": "{motion.duration.300}" },
+      "enter": { "$value": "{motion.duration.400}" },
+      "slow": { "$value": "{motion.duration.500}" },
+      "emphasis": { "$value": "{motion.duration.600}" }
+    },
+    "delay": {
+      "$description": "Delay roles",
+      "$type": "duration",
+      "none": { "$value": "{motion.delay.0}" },
+      "stagger": { "$value": "{motion.delay.100}" },
+      "deferred": { "$value": "{motion.delay.300}" }
+    },
+    "easing": {
+      "$description": "Easing curves by role",
+      "$type": "cubicBezier",
+      "standard": { "$value": "{motion.easing.100}" },
+      "enter": { "$value": "{motion.easing.200}" },
+      "exit": { "$value": "{motion.easing.300}" },
+      "linear": { "$value": "{motion.easing.0}" }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "color": {
+    "$description": "Semantic colors for the dark theme (default, :root). Each token aliases a core color",
+    "$type": "color",
+    "bg": {
+      "$description": "Background colors",
+      "primary": { "$value": "{color.gray.800}" },
+      "secondary": { "$value": "{color.gray.700}" },
+      "secondary-inverse": { "$value": "{color.white}" },
+      "tertiary": { "$value": "{color.gray.600}" },
+      "tertiary-inverse": { "$value": "{color.white}" },
+      "overlay": { "$value": "{color.gray.800-80}" }
+    },
+    "surface": {
+      "$description": "Surface colors for components and highlights",
+      "primary": { "$value": "{color.gray.400}" },
+      "primary-hover": { "$value": "{color.gray.400}" },
+      "secondary": { "$value": "{color.gray.600}" },
+      "secondary-inverse": { "$value": "{color.gray.200}" },
+      "tertiary": { "$value": "{color.gray.700}" },
+      "tertiary-inverse": { "$value": "{color.gray.100}" },
+      "accent": { "$value": "{color.green.700}" },
+      "danger": { "$value": "{color.red.700}" }
+    },
+    "text": {
+      "$description": "Text colors",
+      "primary": { "$value": "{color.gray.100}" },
+      "secondary": { "$value": "{color.gray.400}" },
+      "secondary-hover": { "$value": "{color.gray.200}" },
+      "secondary-inverse": { "$value": "{color.gray.800}" },
+      "tertiary": { "$value": "{color.gray.500}" },
+      "accent": { "$value": "{color.green.400}" },
+      "danger": { "$value": "{color.red.400}" }
+    },
+    "icon": {
+      "$description": "Icon colors",
+      "primary": { "$value": "{color.gray.200}" },
+      "secondary": { "$value": "{color.gray.400}" },
+      "tertiary": { "$value": "{color.gray.500}" },
+      "accent": { "$value": "{color.green.400}" }
+    },
+    "border": {
+      "$description": "Border colors",
+      "primary": { "$value": "{color.gray.100}" },
+      "secondary": { "$value": "{color.gray.600}" },
+      "tertiary": { "$value": "{color.gray.700}" },
+      "secondary-hover": { "$value": "{color.gray.300}" },
+      "accent": { "$value": "{color.green.600}" },
+      "danger": { "$value": "{color.red.600}" }
+    }
+  }
+}

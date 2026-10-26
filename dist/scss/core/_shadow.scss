@@ -1,7 +1,7 @@
 /**
  * No edites este archivo a mano.
  * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
- * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ * Core: el nombre sale de la ruta (color.gray.100 -> --color-gray-100). Semantic: de $extensions["com.jcbrand"].cssVar.
  */
 
 /* core/shadow: el SCSS original no define tokens de sombra en core. */

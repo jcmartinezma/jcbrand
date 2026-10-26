@@ -4,25 +4,19 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # jcbrand
 
-Sistema de diseño de la marca de JC (José Carlos Martínez), la de jcmartinez.net. Este repo es el paquete privado `@jcmartinezma/jcbrand` y, a la vez, la skill de Cursor que explica cómo usarlo.
+Sistema de diseño de la marca de JC (José Carlos Martínez), la de jcmartinez.net. Este repo es público: otros proyectos lo instalan como dependencia directa de GitHub (`@jcmartinezma/jcbrand`) y, a la vez, es la skill de Cursor que explica cómo usarlo.
 
-Hoy el paquete publica **tokens** y **fuentes**. Los componentes de UI vendrán después, en React. Un proyecto Astro (el portfolio, por ejemplo) puede montarlos como islas. Esta Storybook es la referencia visual: se abre en local y no se publica.
+Hoy la dependencia trae **tokens** y **fuentes**. Los componentes de UI vendrán después, en React. Un proyecto Astro (el portfolio, por ejemplo) puede montarlos como islas. Esta Storybook es la referencia visual: se abre en local y no se publica.
 
-## Instalar el paquete
+## Instalar la dependencia
 
-El paquete vive en GitHub Packages, no en npmjs.com. En el proyecto que lo consume, un `.npmrc` en la raíz (sí se puede commitear: el token no va escrito):
-
-```
-@jcmartinezma:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-`GITHUB_TOKEN` es una variable de entorno. Su valor es un personal access token **classic** con `read:packages` y `repo`. No lo pegues en el repo, ni en el `.npmrc`, ni en el código.
+No está en npmjs.com ni en GitHub Packages. Como el repo es público, npm lo descarga directamente de GitHub, sin `.npmrc` ni token:
 
 ```bash
-export GITHUB_TOKEN="el PAT classic"
-npm install @jcmartinezma/jcbrand
+npm install github:jcmartinezma/jcbrand#semver:^0.2.0
 ```
+
+`#semver:^0.2.0` elige el tag de git más alto del rango (`v0.2.x`). Para fijar una versión exacta, `#v0.2.0`. No lo instales sin `#`: tomaría la rama `main`, sin versión.
 
 ## Importar fuentes y tokens
 
@@ -33,7 +27,7 @@ import "@jcmartinezma/jcbrand/fonts.css";
 import "@jcmartinezma/jcbrand/dist/css/tokens.css";
 ```
 
-Las fuentes son Rethink Sans e IBM Plex Mono. Los tokens son custom properties. En un componente se usa el nombre semántico (`--color-bg-primary`), no el primitivo (`--gray-800`).
+Las fuentes son Rethink Sans e IBM Plex Mono. Los tokens son custom properties. En un componente se usa el nombre semántico (`--color-bg-primary`), no el primitivo (`--color-gray-800`).
 
 ## Tema
 
@@ -53,3 +47,7 @@ Cada página lee `tokens/` al arrancar. Si un JSON cambia y se vuelve a construi
 - Tipografía: familias, tamaños, pesos, interlineado y tracking, con una muestra viva.
 - Espaciado, radio, sombra, motion, desenfoque y opacidad.
 - Contraste: una historia para el panel Accessibility. No modifica los tokens.
+
+## Licencia
+
+Licencia mixta (ver `LICENSE` en la raíz del repo). El esqueleto es MIT: el código, la estructura, los nombres de token y el build se pueden reutilizar. Los valores de la marca (colores, estilos, escalas), los nombres y los logos tienen todos los derechos reservados: se pueden leer, no reutilizar sin permiso. Las fuentes mantienen su SIL OFL 1.1 original.

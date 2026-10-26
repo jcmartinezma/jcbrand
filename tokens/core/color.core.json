@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "color": {
+    "$description": "Primitive color palette",
+    "$type": "color",
+    "gray": {
+      "$description": "Neutral ramp",
+      "100": { "$value": "#EFEFEF" },
+      "200": { "$value": "#D5D5D5" },
+      "300": { "$value": "#AAAAAA" },
+      "400": { "$value": "#8A8A8A" },
+      "500": { "$value": "#636363" },
+      "600": { "$value": "#4A4A4A" },
+      "700": { "$value": "#242424" },
+      "800": { "$value": "#141414" },
+      "100-60": {
+        "$value": "{color.gray.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "alpha": 0.6
+          }
+        }
+      },
+      "100-80": {
+        "$value": "{color.gray.100}",
+        "$extensions": {
+          "com.jcbrand": {
+            "alpha": 0.8
+          }
+        }
+      },
+      "800-60": {
+        "$value": "{color.gray.800}",
+        "$extensions": {
+          "com.jcbrand": {
+            "alpha": 0.6
+          }
+        }
+      },
+      "800-80": {
+        "$value": "{color.gray.800}",
+        "$extensions": {
+          "com.jcbrand": {
+            "alpha": 0.8
+          }
+        }
+      }
+    },
+    "red": {
+      "$description": "Red ramp",
+      "100": { "$value": "#DFDADA" },
+      "200": { "$value": "#EDB8B8" },
+      "300": { "$value": "#DE8A8A" },
+      "400": { "$value": "#CB5C5C" },
+      "500": { "$value": "#A83030" },
+      "600": { "$value": "#8C2222" },
+      "700": { "$value": "#420F0F" },
+      "800": { "$value": "#0E0202" }
+    },
+    "green": {
+      "$description": "Green ramp",
+      "100": { "$value": "#F3F8DE" },
+      "200": { "$value": "#DEEEA0" },
+      "300": { "$value": "#C8E169" },
+      "400": { "$value": "#B4D249" },
+      "500": { "$value": "#A1BE2C" },
+      "600": { "$value": "#7D9420" },
+      "700": { "$value": "#485612" },
+      "800": { "$value": "#0D1003" }
+    },
+    "blue": {
+      "$description": "Blue ramp",
+      "100": { "$value": "#DADCDF" },
+      "200": { "$value": "#B7CDED" },
+      "300": { "$value": "#89ABDE" },
+      "400": { "$value": "#5B88CB" },
+      "500": { "$value": "#305FA8" },
+      "600": { "$value": "#214C8C" },
+      "700": { "$value": "#0F2342" },
+      "800": { "$value": "#030B18" }
+    },
+    "white": { "$value": "#FFFFFF" },
+    "black": { "$value": "#000000" }
+  }
+}

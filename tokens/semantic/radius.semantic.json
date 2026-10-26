@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "border-radius": {
+    "$description": "Semantic border radius scale. Each token aliases a core radius step",
+    "$type": "dimension",
+    "xs": { "$value": "{border-radius.100}" },
+    "sm": { "$value": "{border-radius.300}" },
+    "md": { "$value": "{border-radius.400}" },
+    "lg": { "$value": "{border-radius.500}" },
+    "full": { "$value": "{border-radius.600}" }
+  }
+}

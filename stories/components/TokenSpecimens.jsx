@@ -254,8 +254,8 @@ export function ContrastCanvas() {
           </div>
         </section>
       ))}
-      <p className="jc-contrast-sample jc-contrast-known" style={{ background: "var(--white)", color: "var(--green-500)" }}>
-        var(--green-500) sobre var(--white). Es el acento de texto del tema claro encima del fondo de página claro.
+      <p className="jc-contrast-sample jc-contrast-known" style={{ background: "var(--color-white)", color: "var(--color-green-500)" }}>
+        var(--color-green-500) sobre var(--color-white). Es el acento de texto del tema claro encima del fondo de página claro.
       </p>
     </div>
   );

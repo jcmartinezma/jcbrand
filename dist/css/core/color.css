@@ -1,46 +1,46 @@
 /**
  * No edites este archivo a mano.
  * Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.
- * Cada nombre sale de $extensions["com.jcbrand"].cssVar.
+ * Core: el nombre sale de la ruta (color.gray.100 -> --color-gray-100). Semantic: de $extensions["com.jcbrand"].cssVar.
  */
 
 :root {
-  --black: #000000;
-  --blue-100: #DADCDF;
-  --blue-200: #B7CDED;
-  --blue-300: #89ABDE;
-  --blue-400: #5B88CB;
-  --blue-500: #305FA8;
-  --blue-600: #214C8C;
-  --blue-700: #0F2342;
-  --blue-800: #030B18;
-  --gray-100: #EFEFEF;
-  --gray-100-60: rgb(from var(--gray-100) r g b / 60%);
-  --gray-100-80: rgb(from var(--gray-100) r g b / 80%);
-  --gray-200: #D5D5D5;
-  --gray-300: #AAAAAA;
-  --gray-400: #8A8A8A;
-  --gray-500: #636363;
-  --gray-600: #4A4A4A;
-  --gray-700: #242424;
-  --gray-800: #141414;
-  --gray-800-60: rgb(from var(--gray-800) r g b / 60%);
-  --gray-800-80: rgb(from var(--gray-800) r g b / 80%);
-  --green-100: #F3F8DE;
-  --green-200: #DEEEA0;
-  --green-300: #C8E169;
-  --green-400: #B4D249;
-  --green-500: #A1BE2C;
-  --green-600: #7D9420;
-  --green-700: #485612;
-  --green-800: #0D1003;
-  --red-100: #DFDADA;
-  --red-200: #EDB8B8;
-  --red-300: #DE8A8A;
-  --red-400: #CB5C5C;
-  --red-500: #A83030;
-  --red-600: #8C2222;
-  --red-700: #420F0F;
-  --red-800: #0E0202;
-  --white: #FFFFFF;
+  --color-black: #000000;
+  --color-blue-100: #DADCDF;
+  --color-blue-200: #B7CDED;
+  --color-blue-300: #89ABDE;
+  --color-blue-400: #5B88CB;
+  --color-blue-500: #305FA8;
+  --color-blue-600: #214C8C;
+  --color-blue-700: #0F2342;
+  --color-blue-800: #030B18;
+  --color-gray-100: #EFEFEF;
+  --color-gray-100-60: rgb(from var(--color-gray-100) r g b / 60%);
+  --color-gray-100-80: rgb(from var(--color-gray-100) r g b / 80%);
+  --color-gray-200: #D5D5D5;
+  --color-gray-300: #AAAAAA;
+  --color-gray-400: #8A8A8A;
+  --color-gray-500: #636363;
+  --color-gray-600: #4A4A4A;
+  --color-gray-700: #242424;
+  --color-gray-800: #141414;
+  --color-gray-800-60: rgb(from var(--color-gray-800) r g b / 60%);
+  --color-gray-800-80: rgb(from var(--color-gray-800) r g b / 80%);
+  --color-green-100: #F3F8DE;
+  --color-green-200: #DEEEA0;
+  --color-green-300: #C8E169;
+  --color-green-400: #B4D249;
+  --color-green-500: #A1BE2C;
+  --color-green-600: #7D9420;
+  --color-green-700: #485612;
+  --color-green-800: #0D1003;
+  --color-red-100: #DFDADA;
+  --color-red-200: #EDB8B8;
+  --color-red-300: #DE8A8A;
+  --color-red-400: #CB5C5C;
+  --color-red-500: #A83030;
+  --color-red-600: #8C2222;
+  --color-red-700: #420F0F;
+  --color-red-800: #0E0202;
+  --color-white: #FFFFFF;
 }

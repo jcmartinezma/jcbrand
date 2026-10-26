@@ -23,11 +23,12 @@ for (const layer of ['core', 'semantic']) {
   }
 }
 
-const flatten = (node, path = [], out = []) => {
+// A token without its own $type inherits the nearest parent group's $type (DTCG).
+const flatten = (node, path = [], out = [], type = node.$type) => {
   for (const [key, value] of Object.entries(node)) {
     if (key.startsWith('$') || typeof value !== 'object' || value === null) continue;
-    if ('$value' in value) out.push({ path: [...path, key].join('.'), tok: value });
-    else flatten(value, [...path, key], out);
+    if ('$value' in value) out.push({ path: [...path, key].join('.'), tok: { ...value, $type: value.$type ?? type } });
+    else flatten(value, [...path, key], out, value.$type ?? type);
   }
   return out;
 };
@@ -35,7 +36,8 @@ const flatten = (node, path = [], out = []) => {
 const byPath = new Map();
 const byFile = new Map();
 for (const file of files) {
-  const selector = file.json.$extensions?.[NS]?.selector ?? ':root';
+  // <name>.semantic.light.json holds only the light-theme overrides; every other file is :root.
+  const selector = file.rel.endsWith('.semantic.light.json') ? '[data-theme="light"]' : ':root';
   const tokens = flatten(file.json).map((token) => ({ ...token, selector, file: file.rel }));
   byFile.set(file.rel, tokens);
   for (const token of tokens) {
@@ -43,6 +45,25 @@ for (const file of files) {
     if (selector === ':root') byPath.set(token.path, token);
   }
 }
+
+// No token has a cssVar: the name comes from the path (color.gray.100 -> --color-gray-100).
+const cssVarOf = (token) => token.tok.$extensions?.[NS]?.cssVar ?? `--${token.path.replaceAll('.', '-')}`;
+
+// DTCG shadow -> CSS box-shadow. Dimensions are {value, unit}; colors are {colorSpace: "srgb", components, alpha}.
+// A zero spread is left out, so `0 1px 2px rgb(0 0 0 / 0.16)` stays exactly as authored.
+const dimCss = (d) => (typeof d === 'string' ? d : d.value === 0 ? '0' : `${d.value}${d.unit}`);
+const colorCss = (c) => {
+  if (typeof c === 'string') return c;
+  if (c.colorSpace !== 'srgb') throw new Error(`shadow color space "${c.colorSpace}" is not supported`);
+  const rgb = c.components.map((part) => Math.round(part * 255)).join(' ');
+  return `rgb(${rgb}${c.alpha != null && c.alpha < 1 ? ` / ${c.alpha}` : ''})`;
+};
+const shadowCss = (value) => [].concat(value)
+  .map((layer) => {
+    const spread = layer.spread == null || (typeof layer.spread === 'object' && layer.spread.value === 0) ? null : dimCss(layer.spread);
+    return [dimCss(layer.offsetX), dimCss(layer.offsetY), dimCss(layer.blur), spread, colorCss(layer.color)].filter((part) => part != null).join(' ');
+  })
+  .join(', ');
 
 function cssValue(token) {
   const ext = token.tok.$extensions?.[NS] ?? {};
@@ -54,7 +75,7 @@ function cssValue(token) {
       fail(`${token.path}: alias {${match[1]}} does not resolve`);
       return '';
     }
-    const ref = `var(${target.tok.$extensions[NS].cssVar})`;
+    const ref = `var(${cssVarOf(target)})`;
     return ext.alpha != null ? `rgb(from ${ref} r g b / ${Math.round(ext.alpha * 100)}%)` : ref;
   }
   switch (token.tok.$type) {
@@ -67,9 +88,7 @@ function cssValue(token) {
     case 'number':
       return ext.cssFormat === 'percent' ? `${Math.round(value * 100)}%` : String(value);
     case 'shadow':
-      return [].concat(value)
-        .map((layer) => [layer.offsetX, layer.offsetY, layer.blur, layer.spread, layer.color].filter((part) => part != null).join(' '))
-        .join(', ');
+      return shadowCss(value);
     default:
       return String(value);
   }
@@ -80,9 +99,7 @@ function expectedFrom(tokens) {
   for (const token of tokens) {
     const selector = token.selector;
     if (!out.has(selector)) out.set(selector, new Map());
-    const name = token.tok.$extensions?.[NS]?.cssVar;
-    if (!name) fail(`${token.path}: missing cssVar`);
-    else out.get(selector).set(name, cssValue(token));
+    out.get(selector).set(cssVarOf(token), cssValue(token));
   }
   return out;
 }
@@ -123,20 +140,20 @@ function compare(label, actualText, expected) {
 }
 
 const fileToOutput = new Map([
-  ['core/color.json', 'core/color'],
-  ['core/typography.json', 'core/typography'],
-  ['core/spacing.json', 'core/spacing'],
-  ['core/radius.json', 'core/radius'],
-  ['core/motion.json', 'core/motion'],
-  ['core/blur.json', 'core/blur'],
-  ['core/opacity.json', 'core/opacity'],
-  ['core/shadow.json', 'core/shadow'],
-  ['semantic/typography.json', 'semantic/typography'],
-  ['semantic/spacing.json', 'semantic/spacing'],
-  ['semantic/radius.json', 'semantic/radius'],
-  ['semantic/motion.json', 'semantic/motion'],
-  ['semantic/blur.json', 'semantic/blur'],
-  ['semantic/shadow.json', 'semantic/shadow'],
+  ['core/color.core.json', 'core/color'],
+  ['core/typography.core.json', 'core/typography'],
+  ['core/spacing.core.json', 'core/spacing'],
+  ['core/radius.core.json', 'core/radius'],
+  ['core/motion.core.json', 'core/motion'],
+  ['core/blur.core.json', 'core/blur'],
+  ['core/opacity.core.json', 'core/opacity'],
+  ['core/shadow.core.json', 'core/shadow'],
+  ['semantic/typography.semantic.json', 'semantic/typography'],
+  ['semantic/spacing.semantic.json', 'semantic/spacing'],
+  ['semantic/radius.semantic.json', 'semantic/radius'],
+  ['semantic/motion.semantic.json', 'semantic/motion'],
+  ['semantic/blur.semantic.json', 'semantic/blur'],
+  ['semantic/shadow.semantic.json', 'semantic/shadow'],
 ]);
 
 let compared = 0;
@@ -150,7 +167,7 @@ for (const [rel, tokens] of byFile) {
       allExpected.get(selector).set(name, value);
     }
   }
-  if (rel === 'semantic/color.dark.json' || rel === 'semantic/color.light.json') continue;
+  if (rel === 'semantic/color.semantic.dark.json' || rel === 'semantic/color.semantic.light.json') continue;
   const stem = fileToOutput.get(rel);
   const cssPath = join(root, 'dist/css', `${stem}.css`);
   const scssPath = join(root, 'dist/scss', `${stem.slice(0, stem.indexOf('/'))}/_${stem.slice(stem.indexOf('/') + 1)}.scss`);
@@ -161,7 +178,7 @@ for (const [rel, tokens] of byFile) {
 }
 
 const colorExpected = new Map();
-for (const rel of ['semantic/color.dark.json', 'semantic/color.light.json']) {
+for (const rel of ['semantic/color.semantic.dark.json', 'semantic/color.semantic.light.json']) {
   for (const [selector, decls] of expectedFrom(byFile.get(rel))) {
     colorExpected.set(selector, decls);
   }
@@ -187,13 +204,13 @@ const expectSpot = (selector, name, value) => {
   if (got !== value) fail(`spot ${selector} ${name}: "${got}" ≠ "${value}"`);
 };
 expectSpot(':root', '--motion-easing-0', 'cubic-bezier(0, 0.0009, 1, 1)');
-expectSpot(':root', '--gray-100-60', 'rgb(from var(--gray-100) r g b / 60%)');
+expectSpot(':root', '--color-gray-100-60', 'rgb(from var(--color-gray-100) r g b / 60%)');
 expectSpot(':root', '--opacity-00', '0%');
 expectSpot(':root', '--opacity-100', '20%');
 expectSpot(':root', '--font-families-sans-1', '"Rethink Sans", sans-serif');
 expectSpot(':root', '--shadow-xs', '0 1px 2px rgb(0 0 0 / 0.16)');
-expectSpot(':root', '--color-bg-primary', 'var(--gray-800)');
-expectSpot('[data-theme="light"]', '--color-bg-primary', 'var(--white)');
+expectSpot(':root', '--color-bg-primary', 'var(--color-gray-800)');
+expectSpot('[data-theme="light"]', '--color-bg-primary', 'var(--color-white)');
 expectSpot(':root', '--text-line-height-lg', 'var(--font-line-height-500)');
 expectSpot(':root', '--text-line-height-xl', 'var(--font-line-height-400)');
 

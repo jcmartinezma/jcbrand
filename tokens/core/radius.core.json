@@ -1,0 +1,14 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "border-radius": {
+    "$description": "Primitive border radius scale",
+    "$type": "dimension",
+    "0": { "$value": "0px" },
+    "100": { "$value": "4px" },
+    "200": { "$value": "8px" },
+    "300": { "$value": "16px" },
+    "400": { "$value": "32px" },
+    "500": { "$value": "64px" },
+    "600": { "$value": "400px" }
+  }
+}

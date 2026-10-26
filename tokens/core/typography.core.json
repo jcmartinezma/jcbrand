@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "font": {
+    "$description": "Primitive typography scales",
+    "families": {
+      "$description": "Font families",
+      "$type": "fontFamily",
+      "sans-1": { "$value": ["Rethink Sans", "sans-serif"] },
+      "monospace-1": { "$value": ["IBM Plex Mono", "monospace"] }
+    },
+    "size": {
+      "$description": "Font sizes",
+      "$type": "dimension",
+      "100": { "$value": "12px" },
+      "200": { "$value": "14px" },
+      "300": { "$value": "16px" },
+      "400": { "$value": "20px" },
+      "500": { "$value": "24px" },
+      "600": { "$value": "32px" },
+      "700": { "$value": "40px" },
+      "800": { "$value": "64px" },
+      "900": { "$value": "72px" }
+    },
+    "weights": {
+      "$description": "Font weights",
+      "$type": "fontWeight",
+      "100": { "$value": 300 },
+      "200": { "$value": 400 },
+      "300": { "$value": 500 },
+      "400": { "$value": 600 },
+      "500": { "$value": 700 },
+      "600": { "$value": 800 },
+      "700": { "$value": 900 }
+    },
+    "line-height": {
+      "$description": "Line heights",
+      "$type": "dimension",
+      "100": { "$value": "14px" },
+      "200": { "$value": "18px" },
+      "300": { "$value": "21px" },
+      "400": { "$value": "30px" },
+      "500": { "$value": "31px" },
+      "600": { "$value": "44px" },
+      "700": { "$value": "76px" }
+    },
+    "letter-spacings": {
+      "$description": "Letter spacing",
+      "$type": "dimension",
+      "100": { "$value": "0px" },
+      "200": { "$value": "1px" },
+      "300": { "$value": "2px" },
+      "minus-100": { "$value": "-1px" }
+    }
+  }
+}

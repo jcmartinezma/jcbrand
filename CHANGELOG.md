@@ -1,29 +1,44 @@
 # Changelog
 
-Cambios del paquete `@jcmartinezma/jcbrand` que se publica en GitHub Packages. La versión es la de `package.json`. El tag del Release es `v` más esa versión.
+Changes to `@jcmartinezma/jcbrand`, which is installed directly from this public GitHub repo. The version is the one in `package.json`. The Release tag is `v` plus that version, and it is what `#semver:` and `#v…` see in the projects that install it.
 
-Este archivo sigue en el repo. El tarball publicado incluye `dist/` y `fonts/` (`files` en `package.json`), no la skill ni este changelog. Quien actualiza con `npm update` tiene que leerlo aquí, o en el Release, para ver tokens renombrados o eliminados.
-
-Un cambio que solo toca la skill o el README no publica versión nueva.
+A change that only touches the skill or the README does not need a new version.
 
 ## Unreleased
 
-Sin versión nueva. Storybook no entra en el tarball: `files` sigue siendo `dist/` y `fonts/`.
+### Changed
 
-### Añadido
+- **Breaking:** the core color variables now include the group name, derived from the token path: `--gray-100` → `--color-gray-100`, `--red-*`, `--green-*`, `--blue-*`, `--white` → `--color-white`, `--black` → `--color-black`. Semantic names (`--color-bg-primary`, …) and all non-color core names are unchanged.
+- Core token files renamed to `<name>.core.json` (e.g. `tokens/core/color.core.json`) with the new structure: `$schema`, `$description` per group, `$type` declared once per group, and no `cssVar` per token.
+- Semantic token files renamed to `<name>.semantic.json` (`color.semantic.dark.json` and `color.semantic.light.json` for the themes) with the same structure. The per-token `cssVar` and the root `$extensions` (`source`, `selector`, `theme`) are gone: names come from the path and the light selector from the file name. The published CSS is unchanged.
+- `shadow.semantic.json` now uses DTCG 2025.10 values (color object, `{value, unit}` dimensions, explicit zero `spread`). The generated CSS is identical.
 
-- Storybook 10 con React y Vite, solo como devDependency, para ver los tokens. Scripts `storybook` y `build-storybook`. Antes de abrir o construir, `prestorybook` / `prebuild-storybook` lanzan `build:tokens`.
-- Interruptor de tema en la barra: oscuro por defecto (`data-theme="dark"` sobre la vista y la documentación) y claro (`data-theme="light"`).
-- Páginas Foundations leídas de `tokens/`: introducción, color, tipografía, espaciado, radio, sombra, motion, desenfoque, opacidad, y una historia de contraste para el addon de accesibilidad.
-- `@storybook/addon-a11y`. Los pares que no llegan a WCAG AA se documentan; los valores de los tokens no cambian.
+## 0.2.0 — 2026-10-26
+
+First public version. Release `v0.2.0`.
+
+### Changed
+
+- The repo goes from private to **public** and is installed as a direct GitHub dependency: `npm install github:jcmartinezma/jcbrand#semver:^0.2.0`.
+- `.github/workflows/publish.yml` replaced by `ci.yml`: it no longer publishes; it checks that `dist/` matches `tokens/` and, on a Release, that the tag is `v<version>`.
+- `package.json`: `publishConfig` removed.
+- `.npmignore` removed.
+
+### Added
+
+- `LICENSE` with a mixed license: the skeleton (code, tooling, token structure, variable names and technical documentation) under MIT; the brand (names, logos, token values and brand rules) with all rights reserved; fonts under their original SIL OFL 1.1. `package.json` declares `"license": "SEE LICENSE IN LICENSE"`.
+- Storybook 10 with React and Vite, as a devDependency only, to view the tokens. `storybook` and `build-storybook` scripts. Before opening or building, `prestorybook` / `prebuild-storybook` run `build:tokens`.
+- Theme switch in the toolbar: dark by default (`data-theme="dark"` on the canvas and the docs) and light (`data-theme="light"`).
+- Foundations pages read from `tokens/`: introduction, color, typography, spacing, radius, shadow, motion, blur, opacity, and a contrast story for the accessibility addon.
+- `@storybook/addon-a11y`. Pairs that do not reach WCAG AA are documented; the token values do not change.
 
 ## 0.1.0 — 2026-10-19
 
-Primera versión publicada. Release `v0.1.0`.
+First published version. Release `v0.1.0`.
 
-### Añadido
+### Added
 
-- Tokens DTCG en `tokens/core` (primitivos) y `tokens/semantic` (tema oscuro en `:root`, 26 overrides en `[data-theme="light"]`).
-- `dist/`: CSS (`tokens.css`, hojas `core/` y `semantic/`) y parciales SCSS, generados con Style Dictionary 5.
-- Fuentes de marca en `fonts/`: Rethink Sans (variable, 400–800, normal y cursiva) e IBM Plex Mono (300, 400, 500, 600, 700), con `fonts.css` y las licencias SIL OFL 1.1.
-- Exports de paquete: `./fonts.css`, `./fonts/*`, `./dist/css/tokens.css`, `./dist/css/*`, `./dist/scss`, `./dist/scss/core`, `./dist/scss/semantic`, `./dist/scss/*`.
+- DTCG tokens in `tokens/core` (primitives) and `tokens/semantic` (dark theme in `:root`, 26 overrides in `[data-theme="light"]`).
+- `dist/`: CSS (`tokens.css`, `core/` and `semantic/` sheets) and SCSS partials, generated with Style Dictionary 5.
+- Brand fonts in `fonts/`: Rethink Sans (variable, 400–800, normal and italic) and IBM Plex Mono (300, 400, 500, 600, 700), with `fonts.css` and the SIL OFL 1.1 licenses.
+- Package exports: `./fonts.css`, `./fonts/*`, `./dist/css/tokens.css`, `./dist/css/*`, `./dist/scss`, `./dist/scss/core`, `./dist/scss/semantic`, `./dist/scss/*`.

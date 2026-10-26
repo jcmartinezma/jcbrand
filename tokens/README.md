@@ -1,29 +1,40 @@
-# Tokens · formato y mapeo a CSS
+# Tokens · format and CSS mapping
 
-Este repo es la skill de Cursor (`SKILL.md`) y el origen del paquete privado `@jcmartinezma/jcbrand`. Quien aplique la marca instala el paquete; no copia `dist/`. `dist/` se genera desde estos JSON, se commitea y entra en el paquete. No lo edites a mano.
+This repo is public, it is the Cursor skill (`SKILL.md`) and the source of the `@jcmartinezma/jcbrand` dependency, which is installed directly from GitHub (`npm install github:jcmartinezma/jcbrand#semver:^0.2.0`). Whoever applies the brand installs the dependency; they do not copy `dist/`. `dist/` is generated from these JSON files, committed, and is what gets installed. Do not edit it by hand.
 
-JSON en formato **W3C DTCG** (`$value`, `$type`, `$description`; alias `"{ruta.del.token}"`). Es una conversión **estructural 1:1** de los SCSS originales: no se ha añadido, renombrado ni corregido ningún token ni valor.
+**License.** The JSON files in `tokens/` (and the `dist/` generated from them) mix two things. The structure (format, layers, paths, token and CSS variable names, aliases, build) is MIT: you can reuse it. The **values** (colors, typefaces, scales) are JC's brand identity and have all rights reserved: if you use this skeleton, put your own. See [LICENSE](../LICENSE).
 
-## Archivos
-| JSON | Origen SCSS | Selector |
+JSON in **W3C DTCG** format (`$value`, `$type`, `$description`; aliases `"{token.path}"`). It is a **1:1 structural conversion** of the original SCSS: no token or value has been added, renamed or fixed.
+
+## Files
+
+| JSON | SCSS origin | Selector |
 |---|---|---|
-| `core/color.json` · `typography.json` · `spacing.json` · `radius.json` · `motion.json` · `blur.json` · `opacity.json` | `core/_*.core.scss` | `:root` |
-| `core/shadow.json` | `core/_shadow.core.scss` (vacío en el original) | — (solo metadatos, sin tokens) |
-| `semantic/color.dark.json` | `semantic/_color.semantic.scss` | `:root` (tema por defecto, oscuro) |
-| `semantic/color.light.json` | `semantic/_color.semantic.scss` | `[data-theme="light"]`: **solo los 26 overrides**; el resto hereda `:root` |
-| `semantic/typography.json` · `spacing.json` · `radius.json` · `motion.json` · `blur.json` · `shadow.json` | `semantic/_*.semantic.scss` | `:root` |
+| `core/color.core.json` · `typography.core.json` · `spacing.core.json` · `radius.core.json` · `motion.core.json` · `blur.core.json` · `opacity.core.json` | `core/_*.core.scss` | `:root` |
+| `core/shadow.core.json` | `core/_shadow.core.scss` (empty in the original) | — (metadata only, no tokens) |
+| `semantic/color.semantic.dark.json` | `semantic/_color.semantic.scss` | `:root` (default theme, dark) |
+| `semantic/color.semantic.light.json` | `semantic/_color.semantic.scss` | `[data-theme="light"]`: **only the 26 overrides**; the rest inherits `:root` |
+| `semantic/typography.semantic.json` · `spacing.semantic.json` · `radius.semantic.json` · `motion.semantic.json` · `blur.semantic.json` · `shadow.semantic.json` | `semantic/_*.semantic.scss` | `:root` |
 
-Cada archivo lleva en la raíz `$extensions["com.jcbrand"] = { source, selector[, theme] }`.
+**Core** files are named `<name>.core.json` and **semantic** files `<name>.semantic.json` (`color.semantic.dark.json` and `color.semantic.light.json` for the two themes). Both layers have this structure:
 
-## Nombre CSS: sin pérdidas
-**Todos** los tokens llevan su variable original en `$extensions["com.jcbrand"].cssVar` (p. ej. `"--gray-800"`). Un build (Style Dictionary, etc.) debe usar ese campo como nombre: así se reproducen exactamente los nombres actuales, aunque la ruta no se derive igual. Los alias se emiten como `var(<cssVar del destino>)`, igual que en el SCSS.
+- `$schema` at the root.
+- A root group (`color`, `font`, `spacing`, …) with `$description`. Each subgroup also has its own `$description`.
+- `$type` is declared only once, on the highest group where all tokens share a type (`color` in `color.core.json` and in both color theme files; in `typography`, one per subgroup). Tokens inherit that type and do not repeat it.
+- Each token has just `$value`, written on one line. Only tokens that need one add `$extensions["com.jcbrand"]` (`alpha`, `cssFormat`). There is no `cssVar`: the CSS name comes from the path.
+- No `$extensions` at the root. The selector comes from the file name: `*.semantic.light.json` → `[data-theme="light"]`, everything else → `:root`.
 
-## Esquema de rutas (ruta → variable)
-| Variable CSS | Ruta JSON | `$type` |
+## CSS name
+
+No token has a `cssVar`: the name is the path joined with `-` and prefixed with `--` (`color.gray.100` → `--color-gray-100`, `font.size.100` → `--font-size-100`). The light theme uses the same paths as the dark one, so it gets the same names. A token could still override its name with `$extensions["com.jcbrand"].cssVar`, but none does. Aliases are emitted as `var(<name of the target>)`.
+
+## Path scheme (path → variable)
+
+| CSS variable | JSON path | `$type` |
 |---|---|---|
-| `--gray-100` … `--blue-800` | `color.<tono>.<paso>` (`color.gray.100`) | color |
-| `--white` / `--black` | `color.white` / `color.black` | color |
-| `--gray-100-60` | `color.gray.100-60` | color (alias + alpha, ver abajo) |
+| `--color-gray-100` … `--color-blue-800` | `color.<hue>.<step>` (`color.gray.100`) | color |
+| `--color-white` / `--color-black` | `color.white` / `color.black` | color |
+| `--color-gray-100-60` | `color.gray.100-60` | color (alias + alpha, see below) |
 | `--font-families-sans-1` | `font.families.sans-1` | fontFamily |
 | `--font-size-100` | `font.size.100` | dimension |
 | `--font-weights-100` | `font.weights.100` | fontWeight |
@@ -36,48 +47,50 @@ Cada archivo lleva en la raíz `$extensions["com.jcbrand"] = { source, selector[
 | `--motion-easing-0` / `--motion-easing-linear` | `motion.easing.0` / `motion.easing.linear` | cubicBezier |
 | `--blur-100` / `--blur-xs` | `blur.100` / `blur.xs` | dimension |
 | `--opacity-00` | `opacity.00` | number |
-| `--color-<bg\|surface\|text\|icon\|border>-<resto>` | `color.<grupo>.<resto>` (`--color-surface-primary-hover` → `color.surface.primary-hover`) | color |
+| `--color-<bg\|surface\|text\|icon\|border>-<rest>` | `color.<group>.<rest>` (`--color-surface-primary-hover` → `color.surface.primary-hover`) | color |
 | `--text-style-*` | `text.style.*` | fontFamily |
 | `--text-size-*` · `--text-line-height-*` · `--text-letter-spacing-*` | `text.size.*` · `text.line-height.*` · `text.letter-spacing.*` | dimension |
 | `--text-weight-*` | `text.weight.*` | fontWeight |
 | `--shadow-xs` | `shadow.xs` | shadow |
 
-Core y semantic comparten grupos raíz (`color`, `spacing`, `border-radius`, `motion`, `blur`) sin colisiones (`spacing.100` frente a `spacing.2xs`).
+Core and semantic share root groups (`color`, `spacing`, `border-radius`, `motion`, `blur`) without collisions (`spacing.100` versus `spacing.2xs`).
 
-## Representación de valores (fiel al original)
-- **dimension / duration** como string con unidad (`"12px"`, `"0.15s"`, `"0px"`), la forma clásica de DTCG que usa Style Dictionary v4. No se usan los objetos `{value, unit}` de DTCG 2025.10, para que el CSS salga byte a byte igual.
-- **fontFamily** como array (`["Rethink Sans", "sans-serif"]`) → CSS `"Rethink Sans", sans-serif` (se entrecomillan los nombres con espacios).
-- **cubicBezier** como array; `motion.easing.0` conserva `[0, 0.0009, 1, 1]` tal cual.
-- **opacity**: `$type: number` en fracción (`0.2`) + `cssFormat: "percent"` → `20%`. `opacity.00` → `0%`.
-- **Colores con alpha** (`--gray-100-60` = `rgb(from var(--gray-100) r g b / 60%)`): `$value: "{color.gray.100}"` + `$extensions["com.jcbrand"].alpha: 0.6`. El build tiene que emitir `rgb(from var(<cssVar>) r g b / <alpha·100>%)`. Una herramienta que ignore la extensión resolverá el color **opaco**.
-- **shadow**: objetos DTCG `{color, offsetX, offsetY, blur}` con los strings originales (`"0"`, `"1px"`, `"rgb(0 0 0 / 0.16)"`). Las capas múltiples van como array. **`spread` se omite** porque el original no lo declara: DTCG lo exige, pero añadir `0` cambiaría el CSS generado.
-- **Orden**: las custom properties no dependen del orden, y JS reordena las claves numéricas (`"100"`), así que el orden de las claves no es significativo.
+## Value representation (faithful to the original)
 
-## Build con Style Dictionary
+- **dimension / duration** as a string with a unit (`"12px"`, `"0.15s"`, `"0px"`), the classic DTCG form used by Style Dictionary v4. The DTCG 2025.10 `{value, unit}` objects are not used, so the CSS comes out byte for byte the same.
+- **fontFamily** as an array (`["Rethink Sans", "sans-serif"]`) → CSS `"Rethink Sans", sans-serif` (names with spaces are quoted).
+- **cubicBezier** as an array; `motion.easing.0` keeps `[0, 0.0009, 1, 1]` as is.
+- **opacity**: `$type: number` as a fraction (`0.2`) + `cssFormat: "percent"` → `20%`. `opacity.00` → `0%`.
+- **Colors with alpha** (`--color-gray-100-60` = `rgb(from var(--color-gray-100) r g b / 60%)`): `$value: "{color.gray.100}"` + `$extensions["com.jcbrand"].alpha: 0.6`. The build must emit `rgb(from var(<cssVar>) r g b / <alpha·100>%)`. A tool that ignores the extension will resolve the **opaque** color.
+- **shadow**: DTCG 2025.10 objects `{color, offsetX, offsetY, blur, spread}`. The color is `{colorSpace: "srgb", components: [0, 0, 0], alpha: 0.16}` and each dimension is `{value, unit}`. Multiple layers go as an array. `spread` is always `{value: 0, unit: "px"}` because the schema requires it, and the build **omits a zero spread** so the CSS stays `0 1px 2px rgb(0 0 0 / 0.16)`. A zero offset is written as `0`.
+- **Order**: custom properties do not depend on order, and JS reorders numeric keys (`"100"`), so key order is not significant.
 
-La configuración está en `sd.config.mjs` (Style Dictionary 5). Lee `tokens/core/*.json` y `tokens/semantic/*.json` y escribe `dist/`. El nombre de salida es siempre `$extensions["com.jcbrand"].cssVar`; el build no inventa nombres a partir de la ruta.
+## Build with Style Dictionary
 
-`color.light.json` usa las mismas rutas que `color.dark.json` (`color.bg.primary`, …). El parser las anida bajo `theme-light` solo para que Style Dictionary no pise el tema oscuro. Ese prefijo no llega al CSS: la variable sigue siendo `--color-bg-primary`, dentro de `[data-theme="light"]`.
+The configuration is in `sd.config.mjs` (Style Dictionary 5). It reads `tokens/core/*.core.json` and `tokens/semantic/*.json` and writes `dist/`. The output name is always derived from the token path.
+
+`color.semantic.light.json` uses the same paths as `color.semantic.dark.json` (`color.bg.primary`, …). The parser nests them under `theme-light` only so Style Dictionary does not overwrite the dark theme. That prefix does not reach the CSS: the variable is still `--color-bg-primary`, inside `[data-theme="light"]`.
 
 ```bash
-npm run build:tokens   # genera dist/ y comprueba nombres y valores
-npm run clean:tokens   # borra dist/css y dist/scss
+npm run build:tokens   # generates dist/ and checks names and values
+npm run clean:tokens   # deletes dist/css and dist/scss
 ```
 
-Hace falta Node 22 o superior. `dist/` se commitea: quien use el repo obtiene el CSS y el SCSS sin correr el build. No lo edites a mano; si cambia un JSON, regenera y commitea `dist/`.
+Node 22 or higher is required. `dist/` is committed: whoever uses the repo gets the CSS and SCSS without running the build. Do not edit it by hand; if a JSON changes, regenerate and commit `dist/`.
 
-Los parciales de `dist/scss/` se cargan con `@use` (ver el README de la raíz). Un alias sale como `var(--referencia)`, igual que en el SCSS original. Los colores con alpha salen como `rgb(from var(--…) r g b / N%)`.
+The `dist/scss/` partials are loaded with `@use` (see the root README). An alias comes out as `var(--reference)`, just like in the original SCSS. Colors with alpha come out as `rgb(from var(--…) r g b / N%)`.
 
-## Validación
-Sin el SCSS original, el script solo valida el JSON (parseo, `$type`, `cssVar`, alias que resuelven sin ciclos y con el mismo tipo, y overrides de light que existen en `:root`):
+## Validation
+
+Without the original SCSS, the script only validates the JSON (parsing, `$type`, aliases that resolve without cycles and with the same type, and light overrides that exist in `:root`):
 
 ```
 node scripts/check-tokens.mjs
 npm run check:tokens
 ```
 
-Con la carpeta de los SCSS originales, además regenera las custom properties y las compara 1:1, archivo por archivo y selector por selector:
+With the folder of the original SCSS, it also regenerates the custom properties and compares them 1:1, file by file and selector by selector:
 
 ```
-node scripts/check-tokens.mjs <carpeta-scss-original> [--emit regenerated.css]
+node scripts/check-tokens.mjs <original-scss-folder> [--emit regenerated.css]
 ```

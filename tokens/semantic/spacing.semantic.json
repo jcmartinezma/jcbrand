@@ -1,0 +1,17 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "spacing": {
+    "$description": "Semantic spacing scale. Each token aliases a core spacing step",
+    "$type": "dimension",
+    "2xs": { "$value": "{spacing.100}" },
+    "xs": { "$value": "{spacing.200}" },
+    "sm": { "$value": "{spacing.300}" },
+    "md": { "$value": "{spacing.400}" },
+    "lg": { "$value": "{spacing.500}" },
+    "xl": { "$value": "{spacing.600}" },
+    "2xl": { "$value": "{spacing.700}" },
+    "3xl": { "$value": "{spacing.800}" },
+    "4xl": { "$value": "{spacing.900}" },
+    "5xl": { "$value": "{spacing.1000}" }
+  }
+}

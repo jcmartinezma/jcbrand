@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "opacity": {
+    "$description": "Primitive opacity scale",
+    "$type": "number",
+    "100": {
+      "$value": 0.2,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "200": {
+      "$value": 0.4,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "300": {
+      "$value": 0.6,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "400": {
+      "$value": 0.8,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssFormat": "percent"
+        }
+      }
+    },
+    "00": {
+      "$value": 0,
+      "$extensions": {
+        "com.jcbrand": {
+          "cssFormat": "percent"
+        }
+      }
+    }
+  }
+}

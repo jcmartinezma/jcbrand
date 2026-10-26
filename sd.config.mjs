@@ -1,7 +1,7 @@
 // Style Dictionary v5 config.
 // Light semantic colors share paths with the dark file (color.bg.primary, …).
 // A parser nests that file under `theme-light` so the merge does not drop :root.
-// The published CSS name is still the token's cssVar, not this internal path.
+// The published CSS name is the token cssVar when it has one (semantic), else its path (core).
 import { formatJcbrand, OUTPUTS } from './scripts/format-css.mjs';
 
 const layers = ['core', 'semantic'];
@@ -30,7 +30,7 @@ const platformOptions = {
   fileHeader: () => [
     'No edites este archivo a mano.',
     'Lo genera Style Dictionary (`npm run build:tokens`) desde tokens/.',
-    'Cada nombre sale de $extensions["com.jcbrand"].cssVar.',
+    'Core: el nombre sale de la ruta (color.gray.100 -> --color-gray-100). Semantic: de $extensions["com.jcbrand"].cssVar.',
   ],
 };
 
@@ -45,9 +45,10 @@ export default {
         pattern: /\.json$/,
         parser: ({ contents, filePath }) => {
           const json = JSON.parse(contents);
+          delete json.$schema;
           delete json.$description;
           delete json.$extensions;
-          if (String(filePath).replaceAll('\\', '/').endsWith('/semantic/color.light.json')) {
+          if (String(filePath).replaceAll('\\', '/').endsWith('/semantic/color.semantic.light.json')) {
             return { 'theme-light': json };
           }
           return json;

@@ -1,0 +1,13 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "blur": {
+    "$description": "Primitive blur scale",
+    "$type": "dimension",
+    "100": { "$value": "4px" },
+    "200": { "$value": "8px" },
+    "300": { "$value": "16px" },
+    "400": { "$value": "24px" },
+    "500": { "$value": "40px" },
+    "600": { "$value": "64px" }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "color": {
+    "$description": "Semantic color overrides for the light theme ([data-theme=\"light\"]). Only tokens that differ from dark are listed; the rest inherit :root",
+    "$type": "color",
+    "bg": {
+      "$description": "Background overrides",
+      "primary": { "$value": "{color.white}" },
+      "secondary": { "$value": "{color.gray.100}" },
+      "tertiary": { "$value": "{color.gray.200}" },
+      "overlay": { "$value": "{color.gray.100-80}" }
+    },
+    "surface": {
+      "$description": "Surface overrides",
+      "secondary": { "$value": "{color.gray.300}" },
+      "tertiary": { "$value": "{color.gray.200}" },
+      "tertiary-inverse": { "$value": "{color.white}" },
+      "accent": { "$value": "{color.green.200}" },
+      "danger": { "$value": "{color.red.200}" }
+    },
+    "text": {
+      "$description": "Text overrides",
+      "primary": { "$value": "{color.gray.700}" },
+      "secondary": { "$value": "{color.gray.500}" },
+      "secondary-hover": { "$value": "{color.gray.400}" },
+      "secondary-inverse": { "$value": "{color.gray.100}" },
+      "tertiary": { "$value": "{color.gray.400}" },
+      "accent": { "$value": "{color.green.500}" },
+      "danger": { "$value": "{color.red.500}" }
+    },
+    "icon": {
+      "$description": "Icon overrides",
+      "primary": { "$value": "{color.gray.500}" },
+      "secondary": { "$value": "{color.gray.600}" },
+      "tertiary": { "$value": "{color.gray.400}" },
+      "accent": { "$value": "{color.green.500}" }
+    },
+    "border": {
+      "$description": "Border overrides",
+      "primary": { "$value": "{color.gray.400}" },
+      "secondary": { "$value": "{color.gray.300}" },
+      "tertiary": { "$value": "{color.gray.200}" },
+      "secondary-hover": { "$value": "{color.gray.400}" },
+      "accent": { "$value": "{color.green.400}" },
+      "danger": { "$value": "{color.red.400}" }
+    }
+  }
+}

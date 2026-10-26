@@ -1,0 +1,13 @@
+{
+  "$schema": "../../schemas/dtcg-format.2025.10.json",
+  "blur": {
+    "$description": "Semantic blur scale. Each token aliases a core blur step",
+    "$type": "dimension",
+    "xs": { "$value": "{blur.100}" },
+    "sm": { "$value": "{blur.200}" },
+    "md": { "$value": "{blur.300}" },
+    "lg": { "$value": "{blur.400}" },
+    "xl": { "$value": "{blur.500}" },
+    "2xl": { "$value": "{blur.600}" }
+  }
+}

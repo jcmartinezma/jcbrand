@@ -1,5 +1,5 @@
 // Turns DTCG tokens into CSS custom properties.
-// Names always come from $extensions["com.jcbrand"].cssVar.
+// Names come from the token path (color.gray.100 -> --color-gray-100).
 // Alias values stay as var(--referenced-css-var), matching the original SCSS.
 import { fileHeader } from 'style-dictionary/utils';
 
@@ -8,32 +8,32 @@ const ALIAS = /^\{([^}]+)\}$/;
 
 /** Output groups, in the order a bundle and the SCSS indexes should list them. */
 export const OUTPUTS = [
-  { id: 'core/color', layer: 'core', name: 'color', test: (filePath) => ends(filePath, '/core/color.json') },
-  { id: 'core/typography', layer: 'core', name: 'typography', test: (filePath) => ends(filePath, '/core/typography.json') },
-  { id: 'core/spacing', layer: 'core', name: 'spacing', test: (filePath) => ends(filePath, '/core/spacing.json') },
-  { id: 'core/radius', layer: 'core', name: 'radius', test: (filePath) => ends(filePath, '/core/radius.json') },
-  { id: 'core/motion', layer: 'core', name: 'motion', test: (filePath) => ends(filePath, '/core/motion.json') },
-  { id: 'core/blur', layer: 'core', name: 'blur', test: (filePath) => ends(filePath, '/core/blur.json') },
-  { id: 'core/opacity', layer: 'core', name: 'opacity', test: (filePath) => ends(filePath, '/core/opacity.json') },
+  { id: 'core/color', layer: 'core', name: 'color', test: (filePath) => ends(filePath, '/core/color.core.json') },
+  { id: 'core/typography', layer: 'core', name: 'typography', test: (filePath) => ends(filePath, '/core/typography.core.json') },
+  { id: 'core/spacing', layer: 'core', name: 'spacing', test: (filePath) => ends(filePath, '/core/spacing.core.json') },
+  { id: 'core/radius', layer: 'core', name: 'radius', test: (filePath) => ends(filePath, '/core/radius.core.json') },
+  { id: 'core/motion', layer: 'core', name: 'motion', test: (filePath) => ends(filePath, '/core/motion.core.json') },
+  { id: 'core/blur', layer: 'core', name: 'blur', test: (filePath) => ends(filePath, '/core/blur.core.json') },
+  { id: 'core/opacity', layer: 'core', name: 'opacity', test: (filePath) => ends(filePath, '/core/opacity.core.json') },
   {
     id: 'core/shadow',
     layer: 'core',
     name: 'shadow',
-    test: (filePath) => ends(filePath, '/core/shadow.json'),
+    test: (filePath) => ends(filePath, '/core/shadow.core.json'),
     emptyNote: '/* core/shadow: el SCSS original no define tokens de sombra en core. */',
   },
   {
     id: 'semantic/color',
     layer: 'semantic',
     name: 'color',
-    test: (filePath) => ends(filePath, '/semantic/color.dark.json') || ends(filePath, '/semantic/color.light.json'),
+    test: (filePath) => ends(filePath, '/semantic/color.semantic.dark.json') || ends(filePath, '/semantic/color.semantic.light.json'),
   },
-  { id: 'semantic/typography', layer: 'semantic', name: 'typography', test: (filePath) => ends(filePath, '/semantic/typography.json') },
-  { id: 'semantic/spacing', layer: 'semantic', name: 'spacing', test: (filePath) => ends(filePath, '/semantic/spacing.json') },
-  { id: 'semantic/radius', layer: 'semantic', name: 'radius', test: (filePath) => ends(filePath, '/semantic/radius.json') },
-  { id: 'semantic/motion', layer: 'semantic', name: 'motion', test: (filePath) => ends(filePath, '/semantic/motion.json') },
-  { id: 'semantic/blur', layer: 'semantic', name: 'blur', test: (filePath) => ends(filePath, '/semantic/blur.json') },
-  { id: 'semantic/shadow', layer: 'semantic', name: 'shadow', test: (filePath) => ends(filePath, '/semantic/shadow.json') },
+  { id: 'semantic/typography', layer: 'semantic', name: 'typography', test: (filePath) => ends(filePath, '/semantic/typography.semantic.json') },
+  { id: 'semantic/spacing', layer: 'semantic', name: 'spacing', test: (filePath) => ends(filePath, '/semantic/spacing.semantic.json') },
+  { id: 'semantic/radius', layer: 'semantic', name: 'radius', test: (filePath) => ends(filePath, '/semantic/radius.semantic.json') },
+  { id: 'semantic/motion', layer: 'semantic', name: 'motion', test: (filePath) => ends(filePath, '/semantic/motion.semantic.json') },
+  { id: 'semantic/blur', layer: 'semantic', name: 'blur', test: (filePath) => ends(filePath, '/semantic/blur.semantic.json') },
+  { id: 'semantic/shadow', layer: 'semantic', name: 'shadow', test: (filePath) => ends(filePath, '/semantic/shadow.semantic.json') },
 ];
 
 function ends(filePath, suffix) {
@@ -48,10 +48,17 @@ export function tokenPath(token) {
   return token.path.join('.');
 }
 
+// The name always comes from the path (color.gray.100 -> --color-gray-100).
+// The parser nests the light theme under `theme-light` (see sd.config.mjs); that prefix is not part of the name.
+// A token can still override the name with $extensions["com.jcbrand"].cssVar (no token does today).
 export function cssVarName(token) {
   const name = tokenExt(token).cssVar;
+  if (name === undefined) {
+    const path = token.path[0] === 'theme-light' ? token.path.slice(1) : token.path;
+    return `--${path.join('-')}`;
+  }
   if (typeof name !== 'string' || !name.startsWith('--')) {
-    throw new Error(`Token ${tokenPath(token)} is missing $extensions.${NS}.cssVar`);
+    throw new Error(`Token ${tokenPath(token)} has an invalid $extensions.${NS}.cssVar`);
   }
   return name;
 }
@@ -66,8 +73,24 @@ function rawType(token) {
 }
 
 export function selectorFor(filePath) {
-  return ends(filePath, '/semantic/color.light.json') ? '[data-theme="light"]' : ':root';
+  return ends(filePath, '/semantic/color.semantic.light.json') ? '[data-theme="light"]' : ':root';
 }
+
+// DTCG shadow -> CSS box-shadow. Dimensions are {value, unit}; colors are {colorSpace: "srgb", components, alpha}.
+// A zero spread is left out, so `0 1px 2px rgb(0 0 0 / 0.16)` stays exactly as authored.
+const dimCss = (d) => (typeof d === 'string' ? d : d.value === 0 ? '0' : `${d.value}${d.unit}`);
+const colorCss = (c) => {
+  if (typeof c === 'string') return c;
+  if (c.colorSpace !== 'srgb') throw new Error(`shadow color space "${c.colorSpace}" is not supported`);
+  const rgb = c.components.map((part) => Math.round(part * 255)).join(' ');
+  return `rgb(${rgb}${c.alpha != null && c.alpha < 1 ? ` / ${c.alpha}` : ''})`;
+};
+const shadowCss = (value) => [].concat(value)
+  .map((layer) => {
+    const spread = layer.spread == null || (typeof layer.spread === 'object' && layer.spread.value === 0) ? null : dimCss(layer.spread);
+    return [dimCss(layer.offsetX), dimCss(layer.offsetY), dimCss(layer.blur), spread, colorCss(layer.color)].filter((part) => part != null).join(' ');
+  })
+  .join(', ');
 
 /**
  * CSS value for one token. `byPath` maps a DTCG path (color.gray.800) to its token
@@ -95,9 +118,7 @@ export function cssValue(token, byPath) {
     case 'number':
       return ext.cssFormat === 'percent' ? `${Math.round(value * 100)}%` : String(value);
     case 'shadow':
-      return [].concat(value)
-        .map((layer) => [layer.offsetX, layer.offsetY, layer.blur, layer.spread, layer.color].filter((part) => part != null).join(' '))
-        .join(', ');
+      return shadowCss(value);
     default:
       return String(value);
   }

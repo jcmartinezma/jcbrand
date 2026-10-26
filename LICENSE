@@ -1,0 +1,88 @@
+jcbrand - Licensing
+
+Copyright (c) 2026 José Carlos Martínez
+
+This repository is licensed in three parts: the SKELETON (open), the BRAND
+(reserved), and the FONTS (their own license). Some files, such as the token
+files, contain both the skeleton and the brand values. In those files the
+split below applies to their content.
+
+
+1. SKELETON, CODE AND TOOLING - MIT License
+===========================================
+
+This part covers:
+
+  - The code and tooling: scripts/, sd.config.mjs, .storybook/, stories/,
+    .github/, package.json and package-lock.json.
+  - The documentation: README.md, SKILL.md, CHANGELOG.md, FONTS.md,
+    tokens/README.md, reference/checklist.md, and the "Integración" part of
+    reference/guide.md (installation and recipes per stack).
+  - The structure of the design system: the file layout of tokens/ and
+    dist/, the W3C DTCG format, the core / semantic / theme layers, the names
+    of the tokens and of the CSS custom properties, the alias relationships
+    between tokens, the light/dark theme mechanism, and the way the system is
+    built and published.
+
+You can reuse the skeleton as the base of your own design system, as long as
+you replace the brand values of part 2 with your own.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+2. BRAND - All rights reserved
+==============================
+
+The following are the visual identity of José Carlos Martínez ("JC"), and are
+NOT covered by the MIT License above:
+
+  - The names and marks "jcbrand", "JC", "José Carlos Martínez" and
+    "jcmartinez.net", and any logo, icon or illustration, including
+    everything in assets/ now or in the future.
+  - The values of the design tokens, which are what defines the look of the
+    brand: the colors (the palette, in core and in both themes), the choice
+    of typefaces, and the values of the type scale, spacing, radius, shadow,
+    motion, blur and opacity. They are in tokens/ and dist/, and are listed
+    in reference/tokens.md.
+  - The brand guidelines: the "Reglas de marca" part of reference/guide.md
+    (palette, contrast, typography and use of the values).
+
+Copyright (c) 2026 José Carlos Martínez. All rights reserved.
+
+Without prior written permission from the copyright holder you may NOT use,
+copy, publish, distribute, sublicense or sell the Brand, in whole or in part.
+This includes using the same values, or values that are only a minor variation
+of them, to reproduce the same look as your own. You also may NOT use the Brand
+in a way that suggests that your work is, or is endorsed by, JC or
+jcmartinez.net.
+
+You MAY read them, and clone or fork this repository to study it, as the
+terms of GitHub allow. You MAY use the skeleton of part 1 with your own
+values and your own brand.
+
+To ask for permission, contact the author through https://jcmartinez.net.
+
+
+3. FONTS - SIL Open Font License 1.1
+====================================
+
+The files in fonts/files/ (Rethink Sans and IBM Plex Mono) are NOT written by
+the author of this repository, and are not covered by parts 1 or 2. They keep
+their own license, the SIL Open Font License 1.1, whose texts are in
+fonts/licenses/. "Plex" is a Reserved Font Name of IBM.
